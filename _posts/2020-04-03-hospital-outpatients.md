@@ -9,7 +9,7 @@ This is where I would write my blog.
 
 ## Matplotlib graph
 
-
+<img src="img/Health_Age_Final.png">
 
 
 ## Plotly Graph
