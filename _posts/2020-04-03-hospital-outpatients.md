@@ -2,13 +2,14 @@
 layout: post
 title: Spotlight on Mental Health
 ---
-## Spotlight on Mental Health 
-#### The number one cause for hospital admissions for young and middle-aged adults.
-##### <i>Comparing the prevalence of hospital inpatient admissions for top major health categories in New York State in 2017<i>
+## Mental Health: The number one cause for hospital admissions for young and middle-aged adults.
+#### <i>Comparing the prevalence of hospital inpatient admissions for top major health categories in New York State in 2017<i>
 
 In 2017, there were over 2.9 million patients admitted to hospitals, both public and private, as inpatients across the state of New York. Admission as an inpatient is reserved for those who are extremely ill; for those who require staying at the hospital overnight for extended treatment, observation and rehabilitation.
 
 What are the major metrics contributing to hospital inpatient admissions? As we explore the inpatient discharge records for New York State in 2017, we aim to get a better understanding of the major health issues and how they are affecting each age group. Furthermore, we will delve deeper into a surprising category that is driving hospital admissions for those between the age of 18 and 50 years old. 
+
+By pulling out the top seven major diagnostic categories we can see trends emerge by different age groups. It is important to note that these numbers were normalized in order to more accurately compare categories between age groups. Category percentages of total admissions by age group were used instead of the sheer frequency count. 
 
 <img src="/img/Health_Age_Final.png">
 
@@ -18,10 +19,13 @@ But what is the striking spike that is the driving cause for hospital admissions
 
 Mental health is a commonly misunderstood and underappreciated facet of our lives. It is easy to recognize and sympathize with someone who has a physical ailment. If someone has high blood pressure, there is an exact number attributed to it and a clearly defined explanation of what that means. As mental health stigmas and lack of mental health education continue to be steadfast in society, it is hard for many people to understand the ramifications of having a mental disorder and therefore more difficult to empathize with those afflicted. The graph below serves as an education tool. Each line represents a specific mental health disorder as a proportion of total mental health hospital admissions by age group. 
 
-Explore the prevalence of specific mental health disorders that result in hospital admissions. You can hover over a datapoint to read its summery or you can click in the legend to filter specific disorders to get a clearer picture. 
+Use the folowing graph to explore the prevalence of specific mental health disorders that result in hospital admissions. You can hover over a datapoint to read its summery or you can click in the legend to filter specific disorders to get a clearer picture. 
 
 {% include Mental_Health_Plotly.html %}
 
 While we are making progress as a society, mental health is still regarded differently than physical disorders. 
 
 It is not commonly understood that mental health is the number one reason for inpatient admittance for adults aged 18-50. Common literature is focused around educating people in protecting their physical health. There are endless articles on the latest physical exercise trend, which foods to eat or avoid in order to achieve the healthiest body. Even though mental health awareness has made strides in the last decade, if you were to google “health tips”, there is not a single mention of mental health across the first page. I think it is past due that mental health is moved to the forefront of conversations regarding health. As it is the number one reason young to middle-aged people have a serious medical incident that requires overnight admission in a hospital, it deserves to be moved to the center of the spotlight, not relegated to obscurity in the shadowy background. 
+
+
+######                                  For access to the raw data and code, please visit my Github
