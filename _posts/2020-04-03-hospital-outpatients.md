@@ -2,6 +2,7 @@
 layout: post
 title: Spotlight on Mental Health
 ---
+
 ## Mental Health: Top Cause for Hospital Admissions for Young and Middle-aged Adults
 #### <i>Comparing the prevalence of hospital inpatient admissions for top major health categories in New York State in 2017<i>
 
