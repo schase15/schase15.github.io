@@ -41,4 +41,4 @@ It is not commonly understood that mental health is a top reason for inpatient a
 
 
 
-##### For access to the raw data and code, please visit my Github
+##### For access to the raw code (which includes a link to the raw data) please visit my ![GitHub](https://github.com/schase15/NY_Health)
