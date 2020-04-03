@@ -5,6 +5,8 @@ title: Spotlight on Mental Health
 ## Mental Health: Top Cause for Hospital Admissions for Young and Middle-aged Adults
 #### <i>Comparing the prevalence of hospital inpatient admissions for top major health categories in New York State in 2017<i>
 
+By Steven Chase
+
 In 2017, there were over 2.9 million patients admitted to hospitals, both public and private, as inpatients across the state of New York. Admission as an inpatient is reserved for those who are extremely ill; for those who require staying at the hospital overnight for extended treatment, observation and rehabilitation.
 
 What are the major metrics contributing to hospital inpatient admissions? As we explore the inpatient discharge records for New York State in 2017, we aim to get a better understanding of the major health issues and how they are affecting each age group. Furthermore, we will delve deeper into a surprising category that is driving hospital admissions for those between the age of 18 and 50 years old. 
