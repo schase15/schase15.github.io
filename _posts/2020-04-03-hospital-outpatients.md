@@ -17,6 +17,11 @@ By looking at this graph we can clearly see a few things. While the proportion o
 
 But what is the striking spike that is the driving cause for hospital admissions for young and middle-aged adults? What is causing hospital inpatient admittance when this group is supposed to be in the prime of their lives? That category is mental health. 
 
+
+> “What mental health needs is more sunlight, more candor, and more unashamed conversation.” <br>
+>– Glenn Close
+
+
 Mental health is a commonly misunderstood and underappreciated facet of our lives. It is easy to recognize and sympathize with someone who has a physical ailment. If someone has high blood pressure, there is an exact number attributed to it and a clearly defined explanation of what that means. As mental health stigmas and lack of mental health education continue to be steadfast in society, it is hard for many people to understand the ramifications of having a mental disorder and therefore more difficult to empathize with those afflicted. The graph below serves as an education tool. Each line represents a specific mental health disorder as a proportion of total mental health hospital admissions by age group. 
 
 Use the folowing graph to explore the prevalence of specific mental health disorders that result in hospital admissions. You can hover over a datapoint to read its summery or you can click in the legend to filter specific disorders to get a clearer picture. 
@@ -28,4 +33,7 @@ While we are making progress as a society, mental health is still regarded diffe
 It is not commonly understood that mental health is the number one reason for inpatient admittance for adults aged 18-50. Common literature is focused around educating people in protecting their physical health. There are endless articles on the latest physical exercise trend, which foods to eat or avoid in order to achieve the healthiest body. Even though mental health awareness has made strides in the last decade, if you were to google “health tips”, there is not a single mention of mental health across the first page. I think it is past due that mental health is moved to the forefront of conversations regarding health. As it is the number one reason young to middle-aged people have a serious medical incident that requires overnight admission in a hospital, it deserves to be moved to the center of the spotlight, not relegated to obscurity in the shadowy background. 
 
 
-######                                  For access to the raw data and code, please visit my Github
+> At the root of this dilemma is the way we view mental health in this country. Whether an illness affects your heart, your leg or your brain, it’s still an illness, and there should be no distinction.” <br> - Michelle Obama
+
+
+##### For access to the raw data and code, please visit my Github
