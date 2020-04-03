@@ -29,7 +29,7 @@ Mental health is a commonly misunderstood and underappreciated facet of our live
 
 Use the following interactive graph to explore the prevalence of specific mental health disorders that result in hospital admissions. You can hover over a datapoint to read its summary or you can click in the legend to filter specific disorders to get a clearer picture. 
 
-{% include Mental_Health_Plotly.html %}
+{% include NY_Mental_Plotly.html %}
 
 While we are making progress as a society, mental health is still regarded differently than physical disorders. 
 
