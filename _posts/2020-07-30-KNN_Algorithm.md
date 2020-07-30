@@ -131,3 +131,40 @@ In python, we can implement an MSE calculation as follows:
 
 ## Put the pieces together in a KNN class
 
+
+Testing code blocks:
+
+```python
+# Return the mean square error by comparing the predicted outputs with the known outputs
+
+def model_mse(predicted, actual):
+    # Start a mse variable at 0
+    mse = 0
+
+    # For each predicted value - square the difference bewteen the actual and predicted output
+    # Sum them all and divide by the number of predicted outputs
+    for i in range(len(predicted)):
+      mse += (actual[i] - predicted[i])**2
+      mse = mse / len(predicted)
+
+    # Return the calculated mean square root
+    return mse
+```
+without python highlight
+
+```
+# Return the mean square error by comparing the predicted outputs with the known outputs
+
+def model_mse(predicted, actual):
+    # Start a mse variable at 0
+    mse = 0
+
+    # For each predicted value - square the difference bewteen the actual and predicted output
+    # Sum them all and divide by the number of predicted outputs
+    for i in range(len(predicted)):
+      mse += (actual[i] - predicted[i])**2
+      mse = mse / len(predicted)
+
+    # Return the calculated mean square root
+    return mse
+```
