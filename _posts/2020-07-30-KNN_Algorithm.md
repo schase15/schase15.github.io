@@ -142,3 +142,13 @@ Pythagorean Theorem:
 
 $$c^2 = a^2 + b^2 $$
 
+https://render.githubusercontent.com/render/math?math=c^2 = a^2 + b^2
+
+https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (x_{i}-y_{i})^2
+
+https://render.githubusercontent.com/render/math?math=MSE = $$ \frac{1}{n}$$ $$\sum(actual - predicted)^2 $$
+
+MSE = https://render.githubusercontent.com/render/math?math=\frac{1}{n} \sum(actual - predicted)^2
+
+https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1.
+
