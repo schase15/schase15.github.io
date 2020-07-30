@@ -41,6 +41,8 @@ Step 3. Make Predicitons
 
 ### Step 1: Calculate Euclidean Distance
 
+<img src="https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (x_{i}-y_{i})^2">
+
 <img src="/img/euc_formula.png">
 
 The Euclidean Distance may sound complicated, and the formula may look intimitating. But the concept is very simple. The Euclidean Distance is the ordinary straight line distance between two data points. The formula can be simply derived from the Pythagorean formula: 
@@ -131,24 +133,9 @@ In python, we can implement an MSE calculation as follows:
 
 ## Put the pieces together in a KNN class
 
-
-testing math markdown rendering:
-
-The formula for Euclidean Distance is:
-
-$$ \sum_{i=1}^n (x_{i}-y_{i})^2 $$
-
-Pythagorean Theorem:
-
-$$c^2 = a^2 + b^2 $$
-
 <img src="https://render.githubusercontent.com/render/math?math=c^2 = a^2 + b^2">
 
 <img src="https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (x_{i}-y_{i})^2">
 
-<img src="https://render.githubusercontent.com/render/math?math=MSE = $$ \frac{1}{n}$$ $$\sum(actual - predicted)^2 $$">
-
 MSE = <img src="https://render.githubusercontent.com/render/math?math=\frac{1}{n} \sum(actual - predicted)^2">
-
-<img src="https://render.githubusercontent.com/render/math?math=e^{i \pi} = -1.">
 
