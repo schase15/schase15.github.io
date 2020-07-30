@@ -235,3 +235,215 @@ def model_mse(predicted, actual):
 
 ## Put the pieces together in a KNN class
 
+Now that we have all of the pieces, we can wrap them all in a K Nearest Neighbor class. All of the functions defined above will be methods that you can call on the class.
+
+```python
+# K Nearest Neighbors Class
+'''
+Class is initialized by setting k (number of nearest neighbors you want to look at)
+Then call the .fit() method to save the X_train matrix and y_train vector
+The method .predict_classification() will return classification predictions given X_test
+The method .predict_regression() will return regression predictions given X_test
+'''
+
+class KNN():
+  def __init__(self, k=3):
+    # k is number of nearest neighbors to return, default is 3
+    self.k = k
+
+
+  def sq_rt(self, x):
+    '''
+    Helper method to return the square root.
+    To be used in Euclidean Distance calculations.
+    '''    
+    return x**0.5
+
+  def euclidean_distance(self, row_1, row_2):
+    '''
+    Helper method to calculate the Euclidean Distance between two points, (row_1 and row_2).
+    To be used in get_KNN to calculate the closest training points to the test data.
+    '''
+    # Save a distance variable to save sum of calculations to
+    distance = 0.0
+    # Itereate through each column of the row
+    for i in range(len(row_1)):
+      # Calculate the length vectors for each dimension and sum them
+      distance += (row_1[i]- row_2[i])**2
+    # Return the square root of the sum of the distances
+    return self.sq_rt(distance)
+
+  def fit(self, X_train, y_train):
+    '''
+    Our algorithm needs the input data to be an python list
+    Fit method will convert X_train and y_train to lists and save in memory
+    '''
+    self.X_train = X_train.values.tolist()
+    self.y_train = y_train.values.tolist()
+
+  def get_KNN(self, test_row):
+    '''
+    Helper method for prediction methods.
+    Will take in one test row and calculate the k nearest neighbors.
+    Returns a list of nearest neighbors.
+    '''
+
+    # Save the rows and calculated distances in a tuple
+    distances = list()
+
+    # Iterate through each row in the training data
+    for i in range(len(self.X_train)):
+      # Use the euclidean distance function to calculate the distances between the train row and the new observation
+      euc_dist = self.euclidean_distance(test_row, self.X_train[i])
+      # Save the index (to later recall the output value), the row data and the calculated distance
+      distances.append((i, self.X_train[i], euc_dist))
+
+
+    # Sort by using the calculated distances (the third item in the tuple)
+    distances.sort(key= lambda tup: tup[2])
+    
+    # Populate a list with k nearest neighbors
+    n_neighbors = list()
+
+    # Get the nearest k neighbors by returning the k first instances in the sorted distances list
+    # Return just the first value in the tuple (the row information)
+    for i in range(self.k):
+      n_neighbors.append(distances[i][:2])
+    
+    # Return the list of nearest neighbors
+    # Don't need to save it to self because we are just using it to populate a list
+    # Used for the prediction method.
+    # The prediction method will save the important information
+    return n_neighbors
+
+  def helper_predict_classification(self, test_row):
+    '''
+    Method returns a classification prediction for a single given test datapoint.
+    This method will be utilized in the predict_classification method which will be 
+    capable of making predictions for a large X_test dataset.
+    '''
+
+    # Find the nearest neighbors
+    n_neighbors = self.get_KNN(test_row)
+
+    # Use the index values of the nearest neighbors to recall their target outputs
+
+    # Store the index values of the n_neighbors
+    train_output = [n_neighbors[i][0] for i in range(self.k)]    
+
+    # Use the index values from the n_neighbors to return their associated outputs from y_train
+    output_values = [self.y_train[value] for value in train_output]
+
+    # Make a prediction by counting each occurance of output values
+    # Return the output value that occurs the most frequently
+    prediction = max(set(output_values), key= output_values.count)
+    # Return the prediction
+    return prediction
+
+  def predict_classification(self, X_test):
+    '''
+    Method utilizes the helper_predict_classification to return predictions for 
+    multiple test rows stored in X_test.
+    '''
+    # X_test must be a python list
+    # Method will convert the input to python lists and save it in memory
+    self.X_test = X_test.values.tolist()
+
+    # Create a list to hold all of the predictions
+    self.predictions = []
+
+    # For each row in X_test, call the predict_classification helper method
+    for test_row in self.X_test:
+      predicted_output = self.helper_predict_classification(test_row)
+
+      # Save the prediction for each row in X_test
+      self.predictions.append(predicted_output)
+
+    # Return the list of predictions for each datapoint in X_test
+    return self.predictions
+
+  def helper_predict_regression(self, test_row):
+    '''
+    Method returns a regression prediction for a single given test datapoint.
+    This method will be utilized in the predict_classification method which will be 
+    capable of making predictions for a large X_test dataset.
+    '''
+
+    # Find the nearest neighbors
+    n_neighbors = self.get_KNN(test_row)
+
+    # Use the index values of the nearest neighbors to recall their target outputs
+
+    # Store the index values of the n_neighbors
+    train_output = [n_neighbors[i][0] for i in range(self.k)]    
+
+    # Use the index values from the n_neighbors to return their associated outputs from y_train
+    output_values = [self.y_train[value] for value in train_output]
+
+    # Make prediction by calculating the mean of the output values from the nearest neighbors
+    prediction = sum(output_values) / len(output_values)
+
+    # Return the prediction
+    return prediction
+
+  def predict_regression(self, X_test):
+    '''
+    Method utilizes the helper_predict_classification to return predictions for 
+    multiple test rows stored in X_test.
+    '''
+    # X_test must be a python list
+    # Method will convert the input to python lists and save it in memory
+    self.X_test = X_test.values.tolist()
+
+    # Create a list to hold all of the predictions
+    self.predictions = []
+
+    # For each row in X_test, call the predict_classification helper method
+    for test_row in self.X_test:
+      predicted_output = self.helper_predict_regression(test_row)
+
+      # Save the prediction for each row in X_test
+      self.predictions.append(predicted_output)
+
+    # Return the list of predictions for each datapoint in X_test
+    return self.predictions
+
+  def model_accuracy(self, y_test):
+    '''
+    Calculates the accuracy of the model's classification predictions.
+    Compares the predicted output values with the known test output values.
+    '''
+    # y_test must be a python list
+    # Method will convert the input to python lists and save it in memory
+    self.y_test = y_test.values.tolist()
+
+    # Compare each prediction to the known test output
+    predict_bool = [self.predictions[i] == self.y_test[i] for i in range(len(self.predictions))]
+
+    # Return the percentage of correct predictions
+    return sum(predict_bool) / len(self.y_test)
+
+  def model_MSE(self, y_test):
+    '''
+    Calculates the mean squared error of the model's regression predictions.
+    Calculated by summing all of the squares of the differences between actual 
+    and predicted, and then dividing by the number of observations.
+    ''' 
+    # y_test must be a python list
+    # Method will convert the input to python lists and save it in memory
+    self.y_test = y_test.values.tolist()
+
+    # Start a mse variable at 0
+    mse = 0
+
+    # For each predicted value - square the difference bewteen the actual and predicted output
+    # Sum them all and return divide by the number of predicted outputs
+    for i in range(len(self.predictions)):
+      mse += (self.y_test[i] - self.predictions[i])**2
+      self.mse = mse / len(self.predictions)
+
+    # Return the calculated mean square root
+    return self.mse
+```
+## Comparing Scikit-Learn's KNN with our own KNN algorithm
+Let's see how our algorithm compares to Scikit-Learn's KNN implementation
