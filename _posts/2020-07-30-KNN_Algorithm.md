@@ -3,12 +3,12 @@ layout: post
 title: K Nearest Neighbors Algorithm with Basic Python
 ---
 
+<img src="/img/mr_rogers.png">
+
 ## K Nearest Neighbors Algorithm
 #### *De-mystifying the black box by building a working algorithm with nothing but basic Python*
   
 *By Steven Chase*
-
-<img src="/img/mr_rogers.png">
 
 As a beginner Data Scientist or as an outsider looking in, Machine Learning can seem like a mystical arena. KNN, XGBoost, DBSCAN Clustering, Random Forest... For many, these names are enough to intimidate them from even peaking under the hood. Besides, they are magical black boxes. You don't need to know what they do as long as you know how to use them. You simply put in the data that you have, and poof, the black box predicts the unknown. However, I am here to pop the hood and explain how at least one of these, K Nearest Neighbors, black boxes work. Because an informed operator of these models will produce more informed and subsequently far superior predictions. 
 
