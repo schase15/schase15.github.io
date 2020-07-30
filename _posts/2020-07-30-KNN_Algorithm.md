@@ -237,7 +237,8 @@ def model_mse(predicted, actual):
 Now that we have all of the pieces, we can wrap them all in a K Nearest Neighbor class. All of the functions defined above will be methods that you can call on the class.
 
 
-* *note that while all of the concepts from the functions above are the same, the methods have been modified slightly to fit the class implementation*
+- *note that while all of the concepts from the functions above are the same, the methods have been modified slightly to fit the class implementation*
+
 ```python
 # K Nearest Neighbors Class
 '''
