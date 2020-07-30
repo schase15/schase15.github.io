@@ -494,7 +494,7 @@ Now we can use the pre-process function to format the Titanic dataset in the way
 df = pre_process(df)
 df.head()
 ```
-As we can see, the data is now in the proper format for our KNN models.
+As we can see, the data is now in the proper format for our KNN models; all values are numeric and there are no redundant columns. 
 <img src="/img/clean_df_head.png">
 
 Now that out data has been pre-processed, we can seperate the target from the fetures.
@@ -588,3 +588,42 @@ Our model can be implemented in the exact same way:
 - Fit the model with our training data
 - Make predictions based off of our test features
 - Provide the known test targets to determine the accuracy
+
+```python
+# Make sure you run the KNN Class above to load the alogorithm
+
+# Instantiate our algorithm
+our_KNN = KNN(3)
+
+# Fit the model with training data
+our_KNN.fit(X_train, y_train)
+
+# Make predictions based off of our test features
+print(our_KNN.predict_classification(X_test))
+
+# Calculate the accuracy of our model
+our_KNN.model_accuracy(y_test)
+```
+The prediction array for our algorithm is:
+```
+[0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0]
+```
+With an accuracy of:
+```
+0.7471910112359551
+```
+Our algorithm resulted in an accuracy of 74.7%, just shy of the results of Scikit-Learn's method but still far better than our baseline. 
+
+### What's Next?
+We have walked through how to implement a K Nearest Neighbors machine learning algorithm that will work with either classification or regression problems. Then we walked through a classification problem using the Titanic dataset. 
+
+For further understanding and practice:
+- Find your own dataset for a regression problem and use the predict_regression() method that we created in our KNN class.
+- Implement different distance metrics like Manhattan distance or Hamming distance
+- Implement different error metrics for both classification and regression
+
+### Resources
+*Jason Brownlee. 'Develop k-Nearest Neighbors in Python From Scratch', Machine Learning Mastery. https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/*
+
+
+##### For access to the raw code please visit my [GitHub](https://github.com/schase15/KNN_Algorithm)
