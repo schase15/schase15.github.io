@@ -123,11 +123,22 @@ Calculating the MSE is the average of the squared differences between the actual
 
 Mathmatically, this formula can be written as
 
-**MSE = $ \frac{1}{n}$ $\sum(actual - predicted)^2 $**
+**MSE = $$ \frac{1}{n}$$ $$\sum(actual - predicted)^2 $$**
 
 In python, we can implement an MSE calculation as follows:
 
 <img src="/img/model_mse.png">
 
 ## Put the pieces together in a KNN class
+
+
+testing math markdown rendering:
+
+The formula for Euclidean Distance is:
+
+$$ \sum_{i=1}^n (x_{i}-y_{i})^2 $$
+
+Pythagorean Theorem:
+
+$$c^2 = a^2 + b^2 $$
 
