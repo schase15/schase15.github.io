@@ -41,8 +41,6 @@ Step 3. Make Predicitons
 
 ### Step 1: Calculate Euclidean Distance
 
-<img src="https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (x_{i}-y_{i})^2">
-
 <img src="/img/euc_formula.png">
 
 The Euclidean Distance may sound complicated, and the formula may look intimitating. But the concept is very simple. The Euclidean Distance is the ordinary straight line distance between two data points. The formula can be simply derived from the Pythagorean formula: 
@@ -125,17 +123,11 @@ Calculating the MSE is the average of the squared differences between the actual
 
 Mathmatically, this formula can be written as
 
-**MSE = $$ \frac{1}{n}$$ $$\sum(actual - predicted)^2 $$**
+MSE = <img src="https://render.githubusercontent.com/render/math?math=\frac{1}{n} \sum(actual - predicted)^2">
 
 In python, we can implement an MSE calculation as follows:
 
 <img src="/img/model_mse.png">
 
 ## Put the pieces together in a KNN class
-
-<img src="https://render.githubusercontent.com/render/math?math=c^2 = a^2 + b^2">
-
-<img src="https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (x_{i}-y_{i})^2">
-
-MSE = <img src="https://render.githubusercontent.com/render/math?math=\frac{1}{n} \sum(actual - predicted)^2">
 
