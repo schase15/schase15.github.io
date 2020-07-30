@@ -447,3 +447,144 @@ class KNN():
 ```
 ## Comparing Scikit-Learn's KNN with our own KNN algorithm
 Let's see how our algorithm compares to Scikit-Learn's KNN implementation
+
+### Titanic Dataset
+We will work with a very common and easily accessable dataset to make it easier for readers to follow along.
+
+The Titanic dataset is one of the most popular datasets for begining to learn classification models. The data is already cleaned and has a clear classification target of survived or did not survive. After only a few basic pre-processing steps, we will have a perfect dataset for our KNN model.
+
+We will only work with classification. After following along with this article, try to implement a regression problem with the same KNN class we created.
+
+*Download your own copy of the [Titanic dataset](https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv)  and follow along.* 
+
+In order for use to implement either Scikit-Learn or our own alogorithm we need to pre-process the Titanic data. As mentioned before, KNN only handles numeric data and that data must be scaled to make them compareable.
+
+After downloading the Titanic csv and loading it into your notebook, (for instructions look at my source code [here.](https://github.com/schase15/KNN_Algorithm/blob/master/KNN_Algorithm.ipynb)) We can look at the first few records to understand the features of the data we are working with. 
+<img src="/img/df_head.png">
+
+The first column 'Survived' is our target. We are trying to predict whether the passenger survived (1) or did not (0). The remaining columns are features we can choose to use to predict our target. In order to make the pre-processing easier and consistant we will make a pre-processing function.
+
+The function will drop the name category, because a passenger's survival rate doesn't depend on their name, and the fare category because it is directly tied to Pclass and is therefore redundant. 
+
+The last thing we have to do in pre-processing is convert the sex column into numbers. We can accomplish this by using pandas get_dummies() method to One-Hot-Encode the 'Sex' column so that there is a column for male and female populated by 1's and 0's. 
+
+```python
+# Build a pre-processing function that will clean the data for use in our KNN models
+
+def pre_process(df):
+  # Make a copy of the data
+  df = df.copy()
+
+  # Drop Name because target does not depend on name
+  # Drop Fare because it is directly tied to Pclass and therefore redundant information
+  df = df.drop(['Name', 'Fare'], axis=1)
+
+  # One-Hot-Encode the sex column using pd.get_dummies()
+  dummies = pd.get_dummies(df['Sex'])
+  # Add the new 'male' and 'female' columns to the existing df and drop the original 'Sex' column
+  df = pd.concat([df, dummies], axis= 'columns').drop('Sex', axis= 'columns')
+
+  # Return the pre-processed df
+  return df
+```
+Now we can use the pre-process function to format the Titanic dataset in the way that KNN needs it to be.
+```python
+# Run pre-process function and view returned df
+
+df = pre_process(df)
+df.head()
+```
+As we can see, the data is now in the proper format for our KNN models.
+<img src="/img/clean_df_head.png">
+
+Now that out data has been pre-processed, we can seperate the target from the fetures.
+
+```python
+# Define target and features
+features = df.columns.drop('Survived')
+target = 'Survived'
+
+# Create feature matrix and target vector
+X = df[features]
+y = df[target]
+```
+In order to test our alogrithms we need to set aside some of the data we have. This is standard practice for supervised machine learning models. We will use 80% of our data to train our model, and the remaining 20% will be used to test the performance of our model. 
+
+Scikit-Learn has a function to easily do this for us.
+
+```python
+# Import train-test split
+from sklearn.model_selection import train_test_split
+
+# Split the df into 80% train 20% test data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size= 0.20, random_state=42)
+```
+Our data has been cleaned and split into training and testing features and targets. If you've stuck with us this far, it's about to pay off. Let's run some KNN models!
+
+#### Baseline Accuracy
+
+When evaluating model performance we want to start with a baseline accuracy. This is the accuracy score if we were to simply guess the majority outcome everytime. It gives us a starting point to compare our models to. The baseline metric is the best we can do without models. Hopefully, our models can improve over the baseline.
+
+```python
+# Find the majority count
+y_train.value_counts()
+```
+This shows us that the majority of the passengers in the traing data did not survive. (434 did not survive (0), 275 did survive (1))
+
+We run the same code above to get the count of survived and didn't survive for our y_test targets. (111 did not survive (0), 67 did survive (1))
+```python
+# Survival counts for y_test
+y_test.value_counts()
+```
+If we were to guess the majority, that the passenger did not survive (0), for every test case we would get 111 correct out of 178 total test cases. That gives us a baseline accuracy of 62.4%.
+
+### Titanic Predictions Using Scikit-Learn's KNeighborsClassifier
+
+Let's start by making predictions and calculating the accuracy of Scikit-Learn's KNeighborsClassifier model.
+
+This can be done by the following steps:
+
+- Instantiate the model
+- Fit the model with our training data
+- Make predictions based off of our test features
+- Provide the known test targets to determine the accuracy
+
+```python
+# Import the model
+from sklearn.neighbors import KNeighborsClassifier
+
+# Instantiate the KNClassifier object
+scikit_KNN = KNeighborsClassifier(n_neighbors=3)
+
+# Fit the model with training data
+scikit_KNN.fit(X_train, y_train)
+
+# Make predictions
+print(scikit_KNN.predict(X_test))
+
+# Calculate accuracy
+scikit_KNN.score(X_test, y_test)
+```
+Our prediction array is:
+```
+[0 1 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 1 1 0 1 1 1 0 1
+ 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0 1 0 1 0 0 1 1 0 0 1 1 1 1 0 0 0 0 0 0 1 0 0
+ 0 1 1 1 1 0 0 0 0 0 1 1 1 0 0 0 1 1 0 1 0 1 0 0 1 1 1 0 1 1 0 0 0 0 0 0 1
+ 0 0 0 0 0 1 1 0 0 0 1 0 0 1 0 0 1 1 1 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 1 0 0
+ 0 0 0 1 0 0 1 1 0 1 0 0 0 0 0 1 0 1 0 1 0 0 1 1 1 0 1 1 1 0]
+```
+With an accuracy of:
+```
+0.7584269662921348
+```
+Considering the baseline accuracy was 61.2%, Scikit-Learn's model is an improvement at 75.84%.
+
+### Titanic Predictions Using Our Own Algorithm
+
+Let's see how our algorithm does compared to the results from Scikit-Learn.
+
+Our model can be implemented in the exact same way:
+- Instantiate the model
+- Fit the model with our training data
+- Make predictions based off of our test features
+- Provide the known test targets to determine the accuracy
