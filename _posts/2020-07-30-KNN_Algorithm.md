@@ -40,19 +40,14 @@ Step 2. Get Nearest Neighbors
 Step 3. Make Predicitons
 
 ### Step 1: Calculate Euclidean Distance
-
 <img src="/img/euc_formula.png">
-
 The Euclidean Distance may sound complicated, and the formula may look intimitating. But the concept is very simple. The Euclidean Distance is the ordinary straight line distance between two data points. The formula can be simply derived from the Pythagorean formula: 
-
 <img src="/img/a_b_corr.png">
-
 To help with understanding, visually we can view this on a graph. On the graph below data points a and b have been ploted (represented by the large arrowheads). The Euclidean distance we are trying to calculate is the vector drawn in yellow.
 
 By drawing in the vectors representing the datapoints (in blue and red) we can clearly see that the yellow Euclidean distance is simply the hypotenuse of the triangle. 
 
 <img src="/img/pyth_tri.png">
-
 
 <img src="/img/formula_proof.png">
 
@@ -62,7 +57,23 @@ When working with datasets, each row is a datapoint. Each column represents anot
 
 To calculate the Euclidean distance between two points we can use the following function:
 
-<img src="/img/euc_dis.png">
+```python
+# Helper method to calculate the square root
+def sq_rt(x):
+  return x** 0.5
+
+# Calculate the Euclidean distance between two vectors (datapoints)
+def euclidean_distance(row_1, row_2):     # For datapoint row 1 and datapoint row 2
+  # Save a distance variable to save sum of calculations to
+  distance = 0.0
+  # Itereate through each column of the row
+  # Except for the last column which is where the target varibale is stored
+  for i in range(len(row_1)-1):
+    # Calculate the length vectors for each dimension and sum them
+    distance += (row_1[i]- row_2[i])**2
+  # Return the square root of the sum of the distances
+  return sq_rt(distance)
+```
 
 The function above assumes that the output target is the last column of the datapoint and is therefore not included in the distance calculations. In our final KNN class we will have a fit method that saves the X values and the target separately.  
 
@@ -73,8 +84,36 @@ Now that we know how to calculate the distance betweeen two datapoints, we can f
 First we can use the above function to calculate the distances between our new observation and each datapoint in our training set. Once calculated, we can sort these distances and return the instances with the smallest calculated distances.
 
 The below function get_KNN() will implement this idea in python.
+```python
+# Return the k nearest neighbors to the new observation
 
-<img src="/img/get_KNN_code_1.png">
+# Input is the training data, test observation, and the number of neighbors (k) to return
+def get_KNN(train, test_row, k):
+  # Save the rows and calculated distances in a tuple
+  distances = list()
+
+  # Iterate through each row in the training data
+  # Use the euclidean distance function to calculate the distances between the train row 
+  # and the new observation
+  for train_row in train:
+    euc_dist = euclidean_distance(test_row, train_row)
+    # Save the row and calculated distance
+    distances.append((train_row, euc_dist))
+
+  # Sort by using the calculated distances (the second item in the tuple)
+  distances.sort(key= lambda tup: tup[1])
+  
+  # Populate a list with k nearest neighbors
+  n_neighbors = list()
+
+  # Get the nearest k neighbors by returning the k first instances in the sorted distances list
+  # Return just the first value in the tuple (the row information)
+  for i in range(k):
+    n_neighbors.append(distances[i][0])
+  
+  # Return the list of nearest neighbors
+  return n_neighbors
+```
 
 ### Step 3: Make Predictions
 
@@ -87,19 +126,59 @@ For a classification problem, that is as simple as counting up the instances of 
 
 The function below utilizes the output from the get_KNN() function to implement the idea of classification prediction in python:
 
-<img src="/img/class_code.png">
+```python
+# Make a classification prediction with k nearest neighbors
+def predict_classification(train, test_row, k):
+  # Find the nearest neighbors
+  n_neighbors = get_KNN(train, test_row, k)
+
+  # Populate a list with the target output (the last column) from each KNN row
+  output_values = [row[-1] for row in n_neighbors]
+
+  # Make prediction by counting each occurance of output values
+  # Return the output value that occurs the most frequently
+  prediction = max(set(output_values), key= output_values.count)
+  # Return the prediction
+  return prediction
+```
 
 **Regression**
 For a regression problem, we use the same logic of looking at the output values of the K nearest neighbors. Instead of returning the most common occurance, we will return the mean value of the output values as the regression prediction.
 The function below utilizes the output from the get_KNN() function to make a regression prediction in python.
 
-<img src="/img/reg_code.png">
+```python
+# Make a regression prediction with k nearest neighbors
+def predict_regression(train, test_row, k):
+  # Find the nearest neighbors
+  n_neighbors = get_KNN(train, test_row, k)
+
+  # Populate a list with the target output (the last column) from each KNN row
+  output_values = [row[-1] for row in n_neighbors]
+
+  # Make prediction by calculating the mean of the output values from the nearest neighbors
+  prediction = sum(output_values) / len(output_values)
+  # Return the prediction
+  return prediction
+```
 
 The two prediction functions created above are for making a prediction for one new data point. That was primarily for ease of understanding. Generally, we are not looking for a single prediction, but a prediction for each point in a large dataset. To adapt the above functions to handle multiple predictions, just iterate through your new dataset, calling the predict function on each point
 
 The code below will accomplish that for classification.
+```python
+# Create predictions for multiple new datapoints, classification
 
-<img src="/img/multiple_class_code.png">
+def multiple_classifications(train, test, k):
+  # Create a list to hold all of the predictions
+	predictions = list()
+ 
+  # For each row in the test data, call the predict function
+  for row in test:
+		predicted_output = predict_classification(train, row, k)
+		predictions.append(predicted_output)
+  
+  # Return the populated list of predictions
+  return predictions
+```
 
 The above can be similarly modified to handle regression predictions.
 
@@ -114,8 +193,18 @@ This can simply be calculated by counting the number of correct predictions the 
 **accuracy = correct_predictions / total_predictions**
 
 In python this can be implemented as follows:
+```python
+# Return accuracy by comparing predicted output to the known actual output
 
-<img src="/img/model_accuracy.png">
+def model_accuracy(predicted, actual):
+
+    # Compare each prediction to the known test output
+    predict_bool = [predicted[i] == actual[i] for i in range(len(predictions))]
+
+    # Return the percentage of correct predictions
+    accuracy = sum(predict_bool) / len(self.y_test)
+    return accuracy
+```
 
 **Regression error metric**: For regression there are many appropriate error metrics to evaluate your model's ability. Mean squared error, Root mean squared error, mean absolute error, and $R^2$ are a few ooptions. Explaining them all is outside the scope of this article but I suggest you spend some time learning the pros and cons for each one. For our example, we will use mean squared error. 
 
@@ -126,14 +215,6 @@ Mathmatically, this formula can be written as
 MSE = <img src="https://render.githubusercontent.com/render/math?math=\frac{1}{n} \sum(actual - predicted)^2">
 
 In python, we can implement an MSE calculation as follows:
-
-<img src="/img/model_mse.png">
-
-## Put the pieces together in a KNN class
-
-
-Testing code blocks:
-
 ```python
 # Return the mean square error by comparing the predicted outputs with the known outputs
 
@@ -150,21 +231,6 @@ def model_mse(predicted, actual):
     # Return the calculated mean square root
     return mse
 ```
-without python highlight
 
-```
-# Return the mean square error by comparing the predicted outputs with the known outputs
+## Put the pieces together in a KNN class
 
-def model_mse(predicted, actual):
-    # Start a mse variable at 0
-    mse = 0
-
-    # For each predicted value - square the difference bewteen the actual and predicted output
-    # Sum them all and divide by the number of predicted outputs
-    for i in range(len(predicted)):
-      mse += (actual[i] - predicted[i])**2
-      mse = mse / len(predicted)
-
-    # Return the calculated mean square root
-    return mse
-```
