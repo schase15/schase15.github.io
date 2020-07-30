@@ -68,3 +68,66 @@ The function above assumes that the output target is the last column of the data
 
 ### Step 2: Get Nearest Neighbors
 
+Now that we know how to calculate the distance betweeen two datapoints, we can find the k nearest neighbors (closest instances in the training data) to our new datapoint. 
+
+First we can use the above function to calculate the distances between our new observation and each datapoint in our training set. Once calculated, we can sort these distances and return the instances with the smallest calculated distances.
+
+The below function get_KNN() will implement this idea in python.
+
+<img src="/img/get_KNN_code_1.png">
+
+### Step 3: Make Predictions
+
+We have used our knowledge of Euclidean Distance to find the k nearest neighbors to our test datapoint. Now we can make predictions, the whole point of the model.
+
+We have the most similar instances from the dataset to our test observation. Intuatively, by looking at the target outputs of our nearest neighbors, we should be able to predict an output for our test case.
+
+**Classification**:
+For a classification problem, that is as simple as counting up the instances of each output across the k nearest neighbors. Our prediction for our test datapoint will be whichever output occured most frequnetly in the nearest neighbors. 
+
+The function below utilizes the output from the get_KNN() function to implement the idea of classification prediction in python:
+
+<img src="/img/class_code.png">
+
+**Regression**
+For a regression problem, we use the same logic of looking at the output values of the K nearest neighbors. Instead of returning the most common occurance, we will return the mean value of the output values as the regression prediction.
+The function below utilizes the output from the get_KNN() function to make a regression prediction in python.
+
+<img src="/img/reg_code.png">
+
+The two prediction functions created above are for making a prediction for one new data point. That was primarily for ease of understanding. Generally, we are not looking for a single prediction, but a prediction for each point in a large dataset. To adapt the above functions to handle multiple predictions, just iterate through your new dataset, calling the predict function on each point
+
+The code below will accomplish that for classification.
+
+<img src="/img/multiple_class_code.png">
+
+The above can be similarly modified to handle regression predictions.
+
+### Step 3B: Determine Accuracy of Predictions
+We may have predictions but what use are they if we do not know how accurate they are? 
+
+**Classification error metric**:
+For classification we will use accuracy to determine the strength of our predictive model. 
+
+This can simply be calculated by counting the number of correct predictions the model made divided by the amount of predictions it made.
+
+**accuracy = correct_predictions / total_predictions**
+
+In python this can be implemented as follows:
+
+<img src="/img/model_accuracy.png">
+
+**Regression error metric**: For regression there are many appropriate error metrics to evaluate your model's ability. Mean squared error, Root mean squared error, mean absolute error, and $R^2$ are a few ooptions. Explaining them all is outside the scope of this article but I suggest you spend some time learning the pros and cons for each one. For our example, we will use mean squared error. 
+
+Calculating the MSE is the average of the squared differences between the actual output and the predicted output. 
+
+Mathmatically, this formula can be written as
+
+**MSE = $ \frac{1}{n}$ $\sum(actual - predicted)^2 $**
+
+In python, we can implement an MSE calculation as follows:
+
+<img src="/img/model_mse.png">
+
+## Put the pieces together in a KNN class
+
