@@ -41,8 +41,10 @@ Step 3. Make Predicitons
 
 ### Step 1: Calculate Euclidean Distance
 <img src="/img/euc_formula.png">
+
 The Euclidean Distance may sound complicated, and the formula may look intimitating. But the concept is very simple. The Euclidean Distance is the ordinary straight line distance between two data points. The formula can be simply derived from the Pythagorean formula: 
 <img src="/img/a_b_corr.png">
+
 To help with understanding, visually we can view this on a graph. On the graph below data points a and b have been ploted (represented by the large arrowheads). The Euclidean distance we are trying to calculate is the vector drawn in yellow.
 
 By drawing in the vectors representing the datapoints (in blue and red) we can clearly see that the yellow Euclidean distance is simply the hypotenuse of the triangle. 
@@ -63,8 +65,8 @@ def sq_rt(x):
   return x** 0.5
 
 # Calculate the Euclidean distance between two vectors (datapoints)
-def euclidean_distance(row_1, row_2):     # For datapoint row 1 and datapoint row 2
-  # Save a distance variable to save sum of calculations to
+def euclidean_distance(row_1, row_2): 
+  # Create a distance variable to save sum of calculations to
   distance = 0.0
   # Itereate through each column of the row
   # Except for the last column which is where the target varibale is stored
@@ -93,8 +95,7 @@ def get_KNN(train, test_row, k):
   distances = list()
 
   # Iterate through each row in the training data
-  # Use the euclidean distance function to calculate the distances between the train row 
-  # and the new observation
+  # Use the euclidean distance function to calculate the distances between the train row and the new observation
   for train_row in train:
     euc_dist = euclidean_distance(test_row, train_row)
     # Save the row and calculated distance
@@ -206,7 +207,7 @@ def model_accuracy(predicted, actual):
     return accuracy
 ```
 
-**Regression error metric**: For regression there are many appropriate error metrics to evaluate your model's ability. Mean squared error, Root mean squared error, mean absolute error, and $R^2$ are a few ooptions. Explaining them all is outside the scope of this article but I suggest you spend some time learning the pros and cons for each one. For our example, we will use mean squared error. 
+**Regression error metric**: For regression there are many appropriate error metrics to evaluate your model's ability. Mean squared error, Root mean squared error, mean absolute error, and <img src="https://render.githubusercontent.com/render/math?math=R^2"> are a few options. Explaining them all is outside the scope of this article but I suggest you spend some time learning the pros and cons for each one. For our example, we will use mean squared error. 
 
 Calculating the MSE is the average of the squared differences between the actual output and the predicted output. 
 
