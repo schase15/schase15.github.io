@@ -8,11 +8,13 @@ title: K Nearest Neighbors Algorithm with Basic Python
   
 *By Steven Chase*
 
+<img src="/img/mr_rogers.png">
+
 As a beginner Data Scientist or as an outsider looking in, Machine Learning can seem like a mystical arena. KNN, XGBoost, DBSCAN Clustering, Random Forest... For many, these names are enough to intimidate them from even peaking under the hood. Besides, they are magical black boxes. You don't need to know what they do as long as you know how to use them. You simply put in the data that you have, and poof, the black box predicts the unknown. However, I am here to pop the hood and explain how at least one of these, K Nearest Neighbors, black boxes work. Because an informed operator of these models will produce more informed and subsequently far superior predictions. 
 
 ## K Nearest Neighbors
 
-K Nearest Neighbors (KNN) is a supervised machine learning algorithm. While it is most commonly used for classification it can also be used for regression problems. The basic intuition behind KNN can be understood simply by looking at its name, K Nearest Neighbors. While trying to decide how to classify an observation, the KNN model will look for the most similar (nearest neighbor) observations in the training dataset. The K is just an input from the user that tells the model how many nearest neighbors to look for. For example, if I had a vehicle and was trying to determine which type it was, I could look in the parking lot and find the three (my k value) most similar vehicles to mine. Knowing what type of vehicles the ones from the parking lot are, I can predict which type my vehicle is. This is all there is to KNN.
+K Nearest Neighbors (KNN) is a supervised machine learning algorithm. While it is most commonly used for classification, KNN can also be used for regression problems. The basic intuition behind KNN can be understood simply by looking at its name, K Nearest Neighbors. While trying to decide how to classify an observation, the KNN model will look for the most similar (nearest neighbor) observations in the training dataset. The K is just an input from the user that tells the model how many nearest neighbors to look for. For example, if I had a vehicle and was trying to determine which type it was, I could look in the parking lot and find the three (my k value) most similar vehicles to mine. Knowing what type of vehicles the ones from the parking lot are, I can predict which type my vehicle is. This is all there is to KNN.
 
 Now that you have a grasp of the concept, lets dive into the algorithm and the mathematics that make this simple concept work.
 
