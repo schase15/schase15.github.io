@@ -41,21 +41,11 @@ Step 3. Make Predicitons
 
 ### Step 1: Calculate Euclidean Distance
 
-The formula for Euclidean Distance is:
-
-\sum_{i=1}^n (x_{i}-y_{i})^2
+<img src="/img/euc_formula.png">
 
 The Euclidean Distance may sound complicated, and the formula may look intimitating. But the concept is very simple. The Euclidean Distance is the ordinary straight line distance between two data points. The formula can be simply derived from the Pythagorean formula: 
 
-Pythagorean Theorem:
-
-$c^2 = a^2 + b^2 $
-
-Where c is the Euclidean distance between datapoints a and b.
-
-For simplicity, let's first say that data point a and b are 2-Dimensial and described by their x and y coordinates.
-
-a= ($a_{1}, a_{2}$) and b= ($b_{1}, b_{2}$).
+<img src="/img/a_b_corr.png">
 
 To help with understanding, visually we can view this on a graph. On the graph below data points a and b have been ploted (represented by the large arrowheads). The Euclidean distance we are trying to calculate is the vector drawn in yellow.
 
@@ -64,23 +54,7 @@ By drawing in the vectors representing the datapoints (in blue and red) we can c
 <img src="/img/pyth_tri.png">
 
 
-We know that the length of the vectors for point a and b can be calculated by |$a_{1} - b_{1}$| and |$a_{2} - b_{2}$|
-
-So it follows that,
-
-$c^2 = (a_{1}-b_{1})^2 + (a_{2}-b_{2})^2 $
-
-$c = \sqrt{(a_{1}-b_{1})^2 + (a_{2}-b_{2})^2} $
-
-This is the basic formula for Euclidean Distance for 2-D datapoints.
-
-However, this can be expanded to 3-D and beyond leaving us with the finalized formula of Euclidean Distance we saw above.
-
-$c = \sqrt{(a_{1}-b_{1})^2 + (a_{2}-b_{2})^2 + (a_{3}-b_{3})^2 + ... + (a_{n}-b_{n})^2} $
-
-More succintly written as,
-
-$ \sum_{i=1}^n (a_{i}-b_{i})^2 $
+<img src="/img/formula_proof.png">
 
 **Given our understanding of the mathmatics behind calculating the Euclidean distance, how can we write that calculation in python?**
 
