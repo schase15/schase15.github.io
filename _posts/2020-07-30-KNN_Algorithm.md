@@ -39,18 +39,44 @@ Step 2. Get Nearest Neighbors
 Step 3. Make Predictions
 
 ### Step 1: Calculate Euclidean Distance
-<img src="/img/euc_formula.png">
 
-The Euclidean Distance may sound complicated, and the formula may look intimidating. But the concept is very simple. The Euclidean Distance is the ordinary straight-line distance between two points. The formula can be simply derived from the Pythagorean formula: 
-<img src="/img/a_b_corr.png">
+The formula for Euclidean Distance is:
+
+<img src="https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (x_{i}-y_{i})^2">
+
+The Euclidean Distance may sound complicated, and the formula may look intimidating. But the concept is very simple. The Euclidean Distance is the ordinary straight-line distance between two points. The formula can be derived from the Pythagorean formula: 
+
+<img src="https://render.githubusercontent.com/render/math?math=c^2 = a^2 %2B b^2">
+
+Where *c* is the Euclidean distance between data points *a* and *b*.
+
+Let's say that data points *a* and *b* are 2-Dimensional and described by their x and y coordinates.
+
+<img src="https://render.githubusercontent.com/render/math?math=a=(a_{1}, a_{2})"> and <img src="https://render.githubusercontent.com/render/math?math=b=(b_{1}, b_{2})">
 
 To help with understanding, visually we can view this on a graph. On the graph below data points *a* and *b* have been plotted (represented by the large arrowheads). The Euclidean distance we are trying to calculate is the vector drawn in yellow.
 
-By drawing in the vectors representing the data points (in blue and red) we can clearly see that the yellow Euclidean distance is simply the hypotenuse of the triangle. 
+By drawing in the vectors representing the data points (in blue and red) we can clearly see that the yellow Euclidean distance is the hypotenuse of the triangle. 
 
 <img src="/img/pyth_tri.png">
 
-<img src="/img/formula_proof.png">
+We know that the length of the vectors for point *a* and *b* can be calculated by |<img src="https://render.githubusercontent.com/render/math?math=a_{1} - b_{1}">| and |<img src="https://render.githubusercontent.com/render/math?math=a_{2} - b_{2}">|
+
+So it follows that,
+
+<img src="https://render.githubusercontent.com/render/math?math=c^2 = (a_{1}-b_{1})^2 %2B (a_{2}-b_{2})^2">
+
+<img src="https://render.githubusercontent.com/render/math?math=c=\sqrt{(a_{1}-b_{1})^2 %2B (a_{2}-b_{2})^2}">
+
+This is the basic formula for Euclidean Distance for 2-D datapoints.
+
+However, this can be expanded to 3-D and beyond leaving us with the finalized formula of Euclidean Distance we saw above.
+
+<img src="https://render.githubusercontent.com/render/math?math=c = \sqrt{(a_{1}-b_{1})^2 %2B (a_{2}-b_{2})^2 %2B (a_{3}-b_{3})^2 %2B ... %2B (a_{n}-b_{n})^2}">
+
+More succintly written as,
+
+<img src="https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (a_{i}-b_{i})^2">
 
 **Given our understanding of the mathematics behind calculating the Euclidean distance, how can we write that calculation in Python?**
 
@@ -640,7 +666,7 @@ For further understanding and practice:
 Hopefully this detailed tutorial has removed any mystery around K Nearest Neighbors. As with all algorithms, it is firmly seated in mathematics, not magic. Having written your first algorithm by hand, you should now have the confidence to tackle any other black box model out there. True, some may be more complicated than others, but by lifting the hood and understanding the moving parts underneath, you will be able to yield much more powerful predictive models. 
 
 #### Resources
-*Jason Brownlee. 'Develop k-Nearest Neighbors in Python From Scratch', Machine Learning Mastery. https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/*
+*Brownlee, J. (2020, February 24). Develop k-Nearest Neighbors in Python From Scratch. Retrieved from Machine Learning Mastery: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/*
 
 
 ##### For access to the raw code please visit my [GitHub](https://github.com/schase15/KNN_Algorithm)
