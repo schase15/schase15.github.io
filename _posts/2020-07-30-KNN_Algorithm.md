@@ -1,28 +1,28 @@
 ---
 layout: post
-title: K Nearest Neighbors Algorithm with Basic Python
+title: Implementing K Nearest Neighbors Algorithm with Basic Python
 ---
 
 <img src="/img/mr_rogers.png">
 
-## K Nearest Neighbors Algorithm
+## Implementing K Nearest Neighbors Algorithm
 #### *De-mystifying the black box by building a working algorithm with nothing but basic Python*
   
 *By Steven Chase*
 
-As a beginner Data Scientist or as an outsider looking in, Machine Learning can seem like a mystical arena. KNN, XGBoost, DBSCAN Clustering, Random Forest... For many, these names are enough to intimidate them from even peaking under the hood. Besides, they are magical black boxes. You don't need to know what they do as long as you know how to use them. You simply put in the data that you have, and poof, the black box predicts the unknown. However, I am here to pop the hood and explain how at least one of these, K Nearest Neighbors, black boxes work. Because an informed operator of these models will produce more informed and subsequently far superior predictions. 
+As a beginner Data Scientist or as an outsider looking in, Machine Learning can seem like a mystical arena. KNN, XGBoost, DBSCAN Clustering, Random Forest... For many, these names are enough to intimidate them from even peaking under the hood. And who needs to, they are magical black boxes. You don't need to know what they do as long as you know how to use them. Right? You simply put in the data that you have, and poof, the black box predicts the unknown. However, I am here to pop the hood and explain how at least one of these, K Nearest Neighbors, black boxes work. Because an informed operator of these models will produce more informed and subsequently far superior predictions. 
 
 ## K Nearest Neighbors
 
-K Nearest Neighbors (KNN) is a supervised machine learning algorithm. While it is most commonly used for classification, KNN can also be used for regression problems. The basic intuition behind KNN can be understood simply by looking at its name, K Nearest Neighbors. While trying to decide how to classify an observation, the KNN model will look for the most similar (nearest neighbor) observations in the training dataset. The K is just an input from the user that tells the model how many nearest neighbors to look for. For example, let's say you have a car in a garage. I have to guess whether it is a truck, SUV or sedan. You won't tell me which type it is, but I can ask you to point out the five (my k value) most similar (nearest neighbors) cars in the adjacent parking lot. Based on the types of cars you tell me are the most similar, I can make an educated guess as to the type of car in the garage. If four of the similar cars you choose are sedans and one is a convertiable, I would predict that the car in the garage is a sedan. This is all there is to KNN.
+K Nearest Neighbors (KNN) is a supervised machine learning algorithm. While it is most commonly used for classification, KNN can also be used for regression problems. The basic intuition behind KNN can be understood by looking at its name, K Nearest Neighbors. While trying to decide how to classify an observation, the KNN model will look for the most similar (nearest neighbor) observations in the training dataset. The K is just an input from the user that tells the model how many nearest neighbors to look for. For example, let's say you have a car in a garage. I have to guess whether it is a truck, SUV or sedan. You won't tell me which type it is, but I can ask you to point out the five (my k value) most similar (nearest neighbors) cars in the adjacent parking lot. Based on the types of cars you tell me are the most similar, I can make an educated guess as to the type of car in the garage. If four of the similar cars you choose are sedans and one is an SUV, I would predict that the car in the garage is a sedan. This is all there is to KNN.
 
 Now that you have a grasp of the concept, lets dive into the algorithm and the mathematics that make this concept work.
 
 ## Theory Behind KNN
 
-As stated above, K Nearest Neighbors makes predictions based off of the most similar observations in its training data. While it can be very powerful, its predictive capability is limited to observations that are similar to the training data it has in memory. Unlike most other models, KNN does not 'learn' from its training dataset. Instead it holds the entire training set in memory and then compares the new observation to its stored data. KNN is known as a 'lazy' model because it performs no work until a prediction is required.
+As stated above, K Nearest Neighbors makes predictions based off of the most similar observations in its training data. While it can be very powerful, its predictive capability is limited to observations that are similar to the training data it has in memory. Unlike most other models, KNN does not 'learn' from its training dataset. Instead it holds the entire training set in memory and then compares the new observation to its stored data. In this regard, KNN is known as a 'lazy' model because it performs no work until a prediction is required.
 
-When a prediction is required it does exactly what it name says. The model examines the new observation and finds the k number of most similar records (nearest neighbors) that it holds in its training set. It then makes a prediction by either returning the most common outcome of the nearest neighbors (classification) or by taking the average outcome of the nearest neighbors (regression).
+When a prediction is required it does exactly what its name says. The model examines the new observation and finds the k number of most similar records (nearest neighbors) that it holds in its training set. It then makes a prediction by either returning the most common outcome of the nearest neighbors (classification) or by taking the average outcome of the nearest neighbors (regression).
 
 **Some Important Notes on Using KNN**
 
@@ -43,15 +43,15 @@ Step 3. Make Predictions
 The formula for Euclidean Distance is:
 <img src="https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (x_{i}-y_{i})^2">
 
-The Euclidean Distance may sound complicated, and the formula may look intimidating. But the concept is very simple. The Euclidean Distance is the ordinary straight-line distance between two points. The formula can be derived from the Pythagorean formula: 
+Euclidean Distance may sound complicated, and the formula may look intimidating. But the concept is very simple. Euclidean Distance is the ordinary straight-line distance between two points. The formula can be derived from the Pythagorean formula: 
 <img src="https://render.githubusercontent.com/render/math?math=c^2 = a^2 %2B b^2">
 
 Where *c* is the Euclidean distance between data points *a* and *b*.
 
-Let's say that data points *a* and *b* are 2-Dimensional and described by their x and y coordinates;
+Let's say that data points *a* and *b* are 2-dimensional and described by their x and y coordinates:
 <img src="https://render.githubusercontent.com/render/math?math=a=(a_{1}, a_{2})"> and <img src="https://render.githubusercontent.com/render/math?math=b=(b_{1}, b_{2})">
 
-To help with understanding, visually we can view this on a graph. On the graph below data points *a* and *b* have been plotted (represented by the large arrowheads). The Euclidean distance we are trying to calculate is the vector drawn in yellow.
+To help with understanding we can view this on a graph. On the graph below data points *a* and *b* have been plotted (represented by the large arrowheads). The Euclidean distance we are trying to calculate is the vector drawn in yellow.
 
 By drawing in the vectors representing the data points (in blue and red) we can clearly see that the yellow Euclidean distance is the hypotenuse of the triangle. 
 
