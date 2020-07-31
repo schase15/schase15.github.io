@@ -75,7 +75,7 @@ More succintly written as,
 
 <img src="https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (a_{i}-b_{i})^2">
 
-leaving us with the finalized formula of Euclidean Distance we saw above.
+Which is the finalized formula of Euclidean Distance we saw above.
 
 **Given our understanding of the mathematics behind calculating the Euclidean distance, how can we write that calculation in Python?**
 
