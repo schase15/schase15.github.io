@@ -79,7 +79,7 @@ Which is the finalized formula of Euclidean Distance we saw above.
 
 **Given our understanding of the mathematics behind calculating the Euclidean distance, how can we write that calculation in Python?**
 
-When working with datasets, each row is a data point. Each column represents another feature or dimension of the data point. The subject of dimensionality and furthermore the curse of dimensionality is outside the scope of this article but is a crucial concept to understand when building your own machine learning models. For the purposes of this article, I will leave further research of that topic to you.
+When working with datasets, each row is a data point. Each column represents another feature or dimension of the data point. *The subject of dimensionality and furthermore the curse of dimensionality is outside the scope of this article but is a crucial concept to understand when building your own machine learning models.* For the purposes of this article, I will leave further research of that topic to you.
 
 To calculate the Euclidean distance between two points we can use the following function:
 
@@ -101,15 +101,15 @@ def euclidean_distance(row_1, row_2):
   return sq_rt(distance)
 ```
 
-The function above assumes that the output target is the last column of the row and is therefore not included in the distance calculations. In our final KNN class we will have a fit method that saves the X values and the target separately and this function will be modified slightly.  
+*The function above assumes that the output target is the last column of the row and is therefore not included in the distance calculations. In our final KNN class we will have a fit method that saves the X values and the target separately and this function will be modified slightly.*  
 
 ### Step 2: Get Nearest Neighbors
 
 Now that we know how to calculate the distance between two data points, we can find the k nearest neighbors (closest instances in the training data) to our new data point. 
 
-First, we can use the above function to calculate the distances between our new observation and each data point in our training set. Once calculated, we can return the k number of instances with the smallest calculated distances from our new data point.
+First, we can use the above function to calculate the distances between our new observation and each data point in our training set. Once calculated, we can return the k number of instances with the smallest distances from our new data point.
 
-The below function get_KNN() will implement this idea in python.
+The below function get_KNN() will implement this idea in Python.
 ```python
 # Return the k nearest neighbors to the new observation
 
@@ -147,7 +147,7 @@ We have used our knowledge of Euclidean Distance to find the k nearest neighbors
 Intuitively, by looking at the outputs of our nearest neighbors, we should be able to predict an output for our test case.
 
 **Classification**:
-For a classification problem, that is as simple as counting up the instances of each output across the k nearest neighbors. Our prediction for our test data point will be whichever output occur most frequently among the nearest neighbors. 
+For a classification problem, our prediction will be whichever output occurs most frequently among the nearest neighbors.  
 
 The function below utilizes the output from the get_KNN() function to implement the idea of classification prediction:
 
@@ -186,9 +186,9 @@ def predict_regression(train, test_row, k):
   return prediction
 ```
 
-For better understanding, we created the above functions thinking of only one new data point. Generally, we are not looking for a single prediction, but a prediction for each point in a larger dataset. To adapt the above functions to handle multiple predictions, just iterate through your new dataset, calling the predict function on each point.
+For ease of understanding, we created the above functions examining only one new data point. Generally, we are not looking for a single prediction, but a prediction for each point in a larger dataset. To adapt the above functions to handle multiple predictions, just iterate through your new dataset, calling the predict function on each point.
 
-The code below will accomplish that for classification.
+The predict_regression() funciton we created above can be similarly modified to handle multiple regression predictions.
 ```python
 # Create predictions for multiple new data points, classification
 
@@ -213,7 +213,7 @@ We may have predictions but what use are they if we do not know how accurate the
 **Classification error metric**:
 For classification we will use accuracy to determine the strength of our predictive model. 
 
-This can be calculated by dividing the number of correct predictions the model by the total amount of predictions it made.
+This can be calculated by dividing the number of correct predictions by the total amount of predictions the model makes.
 
 *accuracy = correct_predictions / total_predictions*
 
@@ -231,7 +231,7 @@ def model_accuracy(predicted, actual):
     return accuracy
 ```
 
-**Regression error metric**: For regression there are a few choices of error metrics to evaluate your model's ability. Such as: mean squared error, root mean squared error, mean absolute error, and <img src="https://render.githubusercontent.com/render/math?math=R^2">. Explaining each is outside the scope of this article but I suggest you spend some time learning the pros and cons for each one. For our example, we will use mean squared error (MSE). 
+**Regression error metric**: For regression there are a few choices of error metrics to evaluate your model's ability. Such as: mean squared error, root mean squared error, mean absolute error, and <img src="https://render.githubusercontent.com/render/math?math=R^2">. Explaining each one is outside the scope of this article, but I suggest you spend some time learning the pros and cons for each one. For our example, we will use mean squared error (MSE) as our error metric. 
 
 Calculating the MSE is the average of the squared differences between the actual output and the predicted output. 
 
@@ -259,7 +259,7 @@ def model_mse(predicted, actual):
 
 ## Put the pieces together in a KNN class
 
-Now that we have all of the pieces, we can wrap them all in a K Nearest Neighbor class. All of the functions defined above will be methods that you can call on the class.
+Now that we have all of the pieces, we can wrap them all in a K Nearest Neighbor class. All of the functions defined and explained above will be methods that you can call on the class.
 
 
 - *note that while all of the concepts from the functions above are the same, the methods have been modified slightly to fit the class implementation*
@@ -473,14 +473,13 @@ class KNN():
     return self.mse
 ```
 ## Comparing Scikit-Learn's KNN with our own KNN algorithm
-Let's see how our algorithm compares to Scikit-Learn's KNN implementation
+Let's see how our algorithm compares to Scikit-Learn's KNN implementation.
 
 ### Titanic Dataset
-We will work with a very common and easily accessible dataset to make it easier for readers to follow along.
-
-The Titanic dataset is one of the most popular datasets for beginning to learn classification models. The data is already cleaned and has a clear classification target of survived or did not survive. After only a few basic pre-processing steps, we will have a perfect dataset for our KNN model.
 
 We will only work with classification. After following along with this article, try to implement a regression problem with the same KNN class we created.
+
+We will work with a very common and easily accessible dataset to make it easier for readers to follow along. The Titanic dataset is one of the most popular datasets for beginning to learn classification models. The data is already cleaned and has a clear classification target of survived or did not survive. After only a few basic pre-processing steps, we will have a perfect dataset for our KNN models.
 
 *Download your own copy of the [Titanic dataset](https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv)  and follow along!* 
 
@@ -659,10 +658,10 @@ We have walked through how to implement a K Nearest Neighbors machine learning a
 
 For further understanding and practice:
 - Find your own dataset for a regression problem and use the predict_regression() method that we created in our KNN class.
-- Implement a different distance metric like Manhattan distance or Hamming distance to calculate the nearest neighbors
+- Implement a different distance metric like Manhattan distance or Hamming distance rather than Euclidean distance to calculate the nearest neighbors
 - Implement different error metrics for both classification and regression
 
-Hopefully this detailed tutorial has removed any mystery around K Nearest Neighbors. As with all algorithms, it is firmly seated in mathematics, not magic. Having written your first algorithm by hand, you should now have the confidence to tackle any other black box model out there. True, some may be more complicated than others, but by lifting the hood and understanding the moving parts underneath, you will be able to yield much more powerful predictive models. 
+Hopefully this tutorial has removed any mystery around K Nearest Neighbors. As with all algorithms, it is firmly seated in mathematics, not magic. Having written your first algorithm by hand, you should now have the confidence to tackle any other black box model out there. True, some may be more complicated than others, but by lifting the hood and understanding the moving parts underneath, you will be able to yield much more powerful predictive models. 
 
 #### Resources
 *Brownlee, J. (2020, February 24). Develop k-Nearest Neighbors in Python From Scratch. Retrieved from Machine Learning Mastery: https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/*
