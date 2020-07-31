@@ -14,9 +14,9 @@ As a beginner Data Scientist or as an outsider looking in, Machine Learning can 
 
 ## K Nearest Neighbors
 
-K Nearest Neighbors (KNN) is a supervised machine learning algorithm. While it is most commonly used for classification, KNN can also be used for regression problems. The basic intuition behind KNN can be understood simply by looking at its name, K Nearest Neighbors. While trying to decide how to classify an observation, the KNN model will look for the most similar (nearest neighbor) observations in the training dataset. The K is just an input from the user that tells the model how many nearest neighbors to look for. For example, if I had a vehicle and was trying to determine which type it was, I could look in the parking lot and find the three (my k value) most similar vehicles to mine. Knowing what type of vehicles the ones from the parking lot are, I can predict which type my vehicle is. This is all there is to KNN.
+K Nearest Neighbors (KNN) is a supervised machine learning algorithm. While it is most commonly used for classification, KNN can also be used for regression problems. The basic intuition behind KNN can be understood simply by looking at its name, K Nearest Neighbors. While trying to decide how to classify an observation, the KNN model will look for the most similar (nearest neighbor) observations in the training dataset. The K is just an input from the user that tells the model how many nearest neighbors to look for. For example, let's say you have a car in a garage. I have to guess whether it is a truck, SUV or sedan. You won't tell me which type it is, but I can ask you to point out the five (my k value) most similar (nearest neighbors) cars in the adjacent parking lot. Based on the types of cars you tell me are the most similar, I can make an educated guess as to the type of car in the garage. If four of the similar cars you choose are sedans and one is a convertiable, I would predict that the car in the garage is a sedan. This is all there is to KNN.
 
-Now that you have a grasp of the concept, lets dive into the algorithm and the mathematics that make this simple concept work.
+Now that you have a grasp of the concept, lets dive into the algorithm and the mathematics that make this concept work.
 
 ## Theory Behind KNN
 
