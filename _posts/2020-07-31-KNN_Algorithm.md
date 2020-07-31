@@ -6,17 +6,17 @@ title: Implementing K Nearest Neighbors Algorithm with Basic Python
 <img src="/img/mr_rogers.png">
 
 ## Implementing K Nearest Neighbors Algorithm
-#### *De-mystifying the black box by building a working algorithm with nothing but basic Python*
+#### *De-mystifying the black box by building a working algorithm with basic Python*
   
 *By Steven Chase*
 
-As a beginner Data Scientist or as an outsider looking in, Machine Learning can seem like a mystical arena. KNN, XGBoost, DBSCAN Clustering, Random Forest... For many, these names are enough to intimidate them from even peaking under the hood. And who needs to, they are magical black boxes. You don't need to know what they do as long as you know how to use them. Right? You simply put in the data that you have, and poof, the black box predicts the unknown. However, I am here to pop the hood and explain how at least one of these, K Nearest Neighbors, black boxes work. Because an informed operator of these models will produce more informed and subsequently far superior predictions. 
+As a beginner Data Scientist or as an outsider looking in, Machine Learning can seem like a mystical arena. Terms like KNN, XGBoost, DBSCAN Clustering and Random Forest are enough to intimidate beginners from even peaking under the hood. But why do you even need to look under the hood? You don't need to know exactly what they do as long as you know how to use them, right? These models are magical black boxes anyhow. You simply put in the data that you have, and poof, the black box predicts the unknown. However, I am here to pop the hood and explain how at least one of these, K Nearest Neighbors, black boxes work. Because at the end of the day, an informed operator of these models will produce more informed and subsequently far superior predictions. 
 
 ## K Nearest Neighbors
 
 K Nearest Neighbors (KNN) is a supervised machine learning algorithm. While it is most commonly used for classification, KNN can also be used for regression problems. The basic intuition behind KNN can be understood by looking at its name, K Nearest Neighbors. While trying to decide how to classify an observation, the KNN model will look for the most similar (nearest neighbor) observations in the training dataset. The K is just an input from the user that tells the model how many nearest neighbors to look for. For example, let's say you have a car in a garage. I have to guess whether it is a truck, SUV or sedan. You won't tell me which type it is, but I can ask you to point out the five (my k value) most similar (nearest neighbors) cars in the adjacent parking lot. Based on the types of cars you tell me are the most similar, I can make an educated guess as to the type of car in the garage. If four of the similar cars you choose are sedans and one is an SUV, I would predict that the car in the garage is a sedan. This is all there is to KNN.
 
-Now that you have a grasp of the concept, lets dive into the algorithm and the mathematics that make this concept work.
+Now that you have a grasp of the concept, let's dive into the algorithm and the mathematics that make this concept work.
 
 ## Theory Behind KNN
 
@@ -26,24 +26,26 @@ When a prediction is required it does exactly what its name says. The model exam
 
 **Some Important Notes on Using KNN**
 
-- KNN is a simple model to implement, but as a result it is limited in the types of data it can take as input. When working with KNN the phrase "garbage in, garbage out" is never more accurate. KNN does not handle categorical variables well so everything must be pre-processed to include numerical values only. 
+- KNN is a simple model to implement, but as a result it is limited in the types of data it can take as input. When working with KNN, the phrase "garbage in, garbage out" is never more accurate. KNN does not handle categorical variables well so everything must be pre-processed to include numerical values only. 
 - Additionally, as you will see in the next section, the nearest neighbors are found by calculating the distances between the new observation and the records held in memory. Those with the smallest distances are considered most similar. Intuitively, you should understand the importance of scaling your data (so that they are all being measured on the same metric) before running a KNN model. If the data points are not measured on the same scale, a measurement of their distances will not be comparable.
 
-## Algorithm Implementation
+Our exploration of K Nearest Neighbors will come in two parts. Part A will walk you through creating the KNN algorithm from scratch. Part B will tackle a popular classification problem. We will use both the KNN algorithm that we created as well as Scikit-Learn's KNClassifier model to show that our algorithm is just as proficient as a popular library's black box version.
+
+## Part A: Algorithm Implementation
 Now that we understand the theory behind KNN, we can implement our own algorithm by hand in three steps.
 
-Step 1. Calculate Euclidean Distance
+Step 1. Calculate Euclidean distance
 
-Step 2. Get Nearest Neighbors
+Step 2. Get K Nearest Neighbors
 
-Step 3. Make Predictions
+Step 3. Make predictions and determine their accuracy
 
 ### Step 1: Calculate Euclidean Distance
 
-The formula for Euclidean Distance is:
+The formula for Euclidean distance is:
 <img src="https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (x_{i}-y_{i})^2">
 
-Euclidean Distance may sound complicated, and the formula may look intimidating. But the concept is very simple. Euclidean Distance is the ordinary straight-line distance between two points. The formula can be derived from the Pythagorean formula: 
+Euclidean distance may sound complicated and the formula may look intimidating, but the concept is very simple. Euclidean distance is the ordinary straight-line distance between two points. The formula can be derived from the Pythagorean formula: 
 <img src="https://render.githubusercontent.com/render/math?math=c^2 = a^2 %2B b^2">
 
 Where *c* is the Euclidean distance between data points *a* and *b*.
@@ -65,7 +67,7 @@ So it follows that,
 
 <img src="https://render.githubusercontent.com/render/math?math=c=\sqrt{(a_{1}-b_{1})^2 %2B (a_{2}-b_{2})^2}">
 
-This is the basic formula for Euclidean Distance for 2-D datapoints.
+This is the basic formula for Euclidean distance for 2-D datapoints.
 
 However, this can be expanded to 3-D and beyond:
 
@@ -75,7 +77,7 @@ More succintly written as,
 
 <img src="https://render.githubusercontent.com/render/math?math=\sum_{i=1}^n (a_{i}-b_{i})^2">
 
-Which is the finalized formula of Euclidean Distance we saw above.
+Which is the finalized formula of Euclidean distance we saw above.
 
 **Given our understanding of the mathematics behind calculating the Euclidean distance, how can we write that calculation in Python?**
 
@@ -103,15 +105,15 @@ def euclidean_distance(row_1, row_2):
 
 *The function above assumes that the output target is the last column of the row and is therefore not included in the distance calculations. In our final KNN class we will have a fit method that saves the X values and the target separately and this function will be modified slightly.*  
 
-### Step 2: Get Nearest Neighbors
+### Step 2: Get K Nearest Neighbors
 
-Now that we know how to calculate the distance between two data points, we can find the k nearest neighbors (closest instances in the training data) to our new data point. 
+Now that we know how to calculate the distance between two data points, we can find the K Nearest Neighbors (closest instances in the training data) to our new data point. 
 
 First, we can use the above function to calculate the distances between our new observation and each data point in our training set. Once calculated, we can return the k number of instances with the smallest distances from our new data point.
 
 The below function get_KNN() will implement this idea in Python.
 ```python
-# Return the k nearest neighbors to the new observation
+# Return the K Nearest Neighbors to the new observation
 
 # Input is the training data, test observation, and the number of neighbors (k) to return
 def get_KNN(train, test_row, k):
@@ -128,7 +130,7 @@ def get_KNN(train, test_row, k):
   # Sort by using the calculated distances (the second item in the tuple)
   distances.sort(key= lambda tup: tup[1])
   
-  # Populate a list with k nearest neighbors
+  # Populate a list with K Nearest Neighbors
   n_neighbors = list()
 
   # Get the nearest k neighbors by returning the k first instances in the sorted distances list
@@ -140,9 +142,9 @@ def get_KNN(train, test_row, k):
   return n_neighbors
 ```
 
-### Step 3: Make Predictions
+### Step 3A: Make Predictions
 
-We have used our knowledge of Euclidean Distance to find the k nearest neighbors to our test data point. Now we can get to the power of the algorithm, making predictions.
+We have used our knowledge of Euclidean distance to find the K Nearest Neighbors to our test data point. Now we can get to the power of the algorithm, making predictions.
 
 Intuitively, by looking at the outputs of our nearest neighbors, we should be able to predict an output for our test case.
 
@@ -152,7 +154,7 @@ For a classification problem, our prediction will be whichever output occurs mos
 The function below utilizes the output from the get_KNN() function to implement the idea of classification prediction:
 
 ```python
-# Make a classification prediction with k nearest neighbors
+# Make a classification prediction with k Nearest Neighbors
 def predict_classification(train, test_row, k):
   # Find the nearest neighbors
   n_neighbors = get_KNN(train, test_row, k)
@@ -168,11 +170,11 @@ def predict_classification(train, test_row, k):
 ```
 
 **Regression**:
-For a regression problem, we use the same logic of looking at the output values of the K nearest neighbors. Instead of returning the most common occurrence as our prediction, we will return the mean value of the nearest neighbors' outputs.
+For a regression problem, we use the same logic of looking at the output values of the K Nearest Neighbors. Instead of returning the most common occurrence as our prediction, we will return the mean value of the nearest neighbors' outputs.
 The function below utilizes the output from the get_KNN() function to make a regression prediction.
 
 ```python
-# Make a regression prediction with k nearest neighbors
+# Make a regression prediction with K Nearest Neighbors
 def predict_regression(train, test_row, k):
   # Find the nearest neighbors
   n_neighbors = get_KNN(train, test_row, k)
@@ -186,9 +188,10 @@ def predict_regression(train, test_row, k):
   return prediction
 ```
 
-For ease of understanding, we created the above functions examining only one new data point. Generally, we are not looking for a single prediction, but a prediction for each point in a larger dataset. To adapt the above functions to handle multiple predictions, just iterate through your new dataset, calling the predict function on each point.
+For ease of understanding, we created the above functions examining only one new data point. Generally, we are not looking for a single prediction, but instead, a prediction for each point in a larger dataset. To adapt the above functions to handle multiple predictions,  iterate through your new dataset, calling the predict function on each new point.
 
-The predict_regression() funciton we created above can be similarly modified to handle multiple regression predictions.
+This is implemented for classification predictions in the function below.
+
 ```python
 # Create predictions for multiple new data points, classification
 
@@ -205,13 +208,13 @@ def multiple_classifications(train, test, k):
   return predictions
 ```
 
-The above can be similarly modified to handle regression predictions.
+The predict_regression() function can also be similarly modified to handle multiple regression predictions.
 
 #### Step 3B: Determine Accuracy of Predictions
 We may have predictions but what use are they if we do not know how accurate they are? 
 
 **Classification error metric**:
-For classification we will use accuracy to determine the strength of our predictive model. 
+For classification, we will use accuracy to determine the strength of our predictive model. 
 
 This can be calculated by dividing the number of correct predictions by the total amount of predictions the model makes.
 
@@ -231,11 +234,11 @@ def model_accuracy(predicted, actual):
     return accuracy
 ```
 
-**Regression error metric**: For regression there are a few choices of error metrics to evaluate your model's ability. Such as: mean squared error, root mean squared error, mean absolute error, and <img src="https://render.githubusercontent.com/render/math?math=R^2">. Explaining each one is outside the scope of this article, but I suggest you spend some time learning the pros and cons for each one. For our example, we will use mean squared error (MSE) as our error metric. 
+**Regression error metric**: For regression there are a few choices of error metrics to evaluate your model's ability: mean squared error, root mean squared error, mean absolute error, and <img src="https://render.githubusercontent.com/render/math?math=R^2">. Explaining each one is outside the scope of this article, but I suggest you spend some time learning the pros and cons for each one. For our example, we will use mean squared error (MSE) as our error metric. 
 
 Calculating the MSE is the average of the squared differences between the actual output and the predicted output. 
 
-Mathematically, this formula can be written as
+Mathematically, this formula can be written as:
 
 MSE = <img src="https://render.githubusercontent.com/render/math?math=\frac{1}{n} \sum(actual - predicted)^2">
 
@@ -282,13 +285,13 @@ class KNN():
   def sq_rt(self, x):
     '''
     Helper method to return the square root.
-    To be used in Euclidean Distance calculations.
+    To be used in Euclidean distance calculations.
     '''    
     return x**0.5
 
   def euclidean_distance(self, row_1, row_2):
     '''
-    Helper method to calculate the Euclidean Distance between two points
+    Helper method to calculate the Euclidean distance between two points
     To be used in get_KNN to calculate the closest training points to the test data.
     '''
     # Save a distance variable to save sum of calculations to
@@ -311,7 +314,7 @@ class KNN():
   def get_KNN(self, test_row):
     '''
     Helper method for prediction methods.
-    Will take in one test row and calculate the k nearest neighbors.
+    Will take in one test row and calculate the K Nearest Neighbors.
     Returns a list of nearest neighbors.
     '''
 
@@ -329,7 +332,7 @@ class KNN():
     # Sort by using the calculated distances (the third item in the tuple)
     distances.sort(key= lambda tup: tup[2])
     
-    # Populate a list with k nearest neighbors
+    # Populate a list with K Nearest Neighbors
     n_neighbors = list()
 
     # Get the nearest k neighbors by returning the k first instances in the sorted distances list
@@ -479,19 +482,19 @@ Let's see how our algorithm compares to Scikit-Learn's KNN implementation.
 
 We will only work with classification. After following along with this article, try to implement a regression problem with the same KNN class we created.
 
-We will work with a very common and easily accessible dataset to make it easier for readers to follow along. The Titanic dataset is one of the most popular datasets for beginning to learn classification models. The data is already cleaned and has a clear classification target of survived or did not survive. After only a few basic pre-processing steps, we will have a perfect dataset for our KNN models.
+We will work with a very common and easily accessible dataset to make it easier for readers to follow along. The Titanic dataset is one of the most popular datasets for beginning to learn classification models. The data is already cleaned and has a clear classification target of 'survived' or 'did not survive'. After only a few basic pre-processing steps, we will have a perfect dataset for our KNN models.
 
 *Download your own copy of the [Titanic dataset](https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv)  and follow along!* 
 
 In order to implement either model, we need to first pre-process the Titanic data. As mentioned before, KNN only handles numeric data and that data must be scaled to make them comparable.
 
-After downloading the Titanic csv and loading it into your notebook, (for instructions look at my source code [here.](https://github.com/schase15/KNN_Algorithm/blob/master/KNN_Algorithm.ipynb)) we can look at the first few records to understand the features of the data we are working with.
+After downloading the Titanic csv and loading it into your notebook, (for instructions look at my source code [here](https://github.com/schase15/KNN_Algorithm/blob/master/KNN_Algorithm.ipynb)) we can look at the first few records to understand the features of the data we are working with.
 
 <img src="/img/df_head.png">
 
 The first column 'Survived' is our target. We are trying to predict whether the passenger survived (1) or did not (0). The remaining columns are features we can choose from to use to predict our target. In order to make the pre-processing easier and consistent across all segments of our data, we will make a pre-processing function.
 
-The function will drop the name category, because a passenger's survival rate doesn't depend on their name, and the fare category because it is directly tied to Pclass and is therefore redundant. The last task we have in pre-processing is to convert the sex column into numerical values. We can accomplish this by using pandas get_dummies() method to One-Hot-Encode the 'Sex' column so that there is a column for male and female populated by 1's and 0's. 
+The function will drop two categories: 'Name' and 'Fare'. The 'name' category will get dropped because a passenger's survival rate doesn't depend on their name and the 'Fare' category will get dropped because it is directly tied to 'Pclass' and is therefore redundant. The last task we have in pre-processing is to convert the 'Sex' column into numerical values. We can accomplish this by using pandas' get_dummies() method to One-Hot-Encode the 'Sex' column so that there is a column for 'male' and 'female' populated by 1's and 0's. 
 
 ```python
 # Build a pre-processing function that will clean the data for use in our KNN models
@@ -544,7 +547,7 @@ from sklearn.model_selection import train_test_split
 # Split the df into 80% train 20% test data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size= 0.20, random_state=42)
 ```
-Our data has been cleaned and split into training and testing features and targets. If you've stuck with us this far, it's about to pay off. Let's run some KNN models!
+Our data has been cleaned and the target and features have been separated and split into training and testing datasets. If you've stuck with us this far, it's about to pay off. Let's run some KNN models!
 
 #### Baseline Accuracy
 
