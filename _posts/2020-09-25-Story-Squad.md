@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Story Squad: Redefining Screen Time to be Educational Fun
+title: Story Squad, Redefining Screen Time to be Educational Fun
 ---
 
 <img src="/img/story_squard_header.png">
