@@ -3,7 +3,7 @@ layout: post
 title: Implementing K Nearest Neighbors Algorithm with Basic Python
 ---
 
-[insert Story Sqaud font image]
+<img src="/img/story_squard_header.png">
 
 ## Story Squad: Redefining Screen Time to be Educational Fun
 ### The application that engages elementary school students by gamifying creative reading and writing
@@ -14,14 +14,16 @@ Background:
 
 Across the nation, the frequency with which students are reading and writing is decreasing. The drop is especially sharp for elementary and high school students. A study done by Common Sense Media discovered that the number of elementary school students who “never” or “hardly ever” read has roughly tripled in the last 30 years, from 8% to 22%. Additionally, the proportion of daily readers drops from 48% at the age of 8 down to 24% at the age of 15. A full third (33%) of 13-year-olds admit to reading no more than once or twice a year! 
 
-[insert pie chart image]
-*The amount of daily readers drops from 53% to 19% from ages 9 to 17 while those who ‘never/hardly ever’ read increases from 11% to 27%.*
+<img src="/img/daily_reader_pie_charts.png">
+*The amount of daily readers drops from 53% to 19% from ages 9 to 17 while those who ‘never/hardly ever’ read increases from 11% to 27%.* [^1]
+
+
 
 These are troubling statistics we are seeing coming from young students. Especially when you consider how important this stage of their development is. Reading and writing during the elementary years is crucial for the development of lifetime creative abilities. However, instead of picking up a book, children are turning more and more to their screens. Fortnite is replacing Harry Potter. Mario Kart is replacing Holes. With improved technology came 24/7 access to screens and the advent of the concept of monitoring ‘screen time’. Parental books have vilified screen-time, obsessed with limiting the amount of time that children are exposed to screens. But what if the issue isn’t with the amount of screen time, but with what the material on the is being consumed through the screens? Screens have pervaded children’s lives and they are drawn to them. Instead of trying to force technology out of their children’s lives, parents should be focused on harnessing their power for good.
 
 Enter Story Squad. Story Squad is the brainchild of Graig Peterson. Graig has been an educator for over a decade and understands how important creative reading and writing is to the development of a young student. He has seen the downward trend of students reading and writing less across his career and wants to re-engage elementary-aged students. His vision is to bring the same game structure that the kids enjoy so much, the reason they spend hours on Fortnite, to reading and writing. His Story Squad application will gamify creative writing. Students will be able to select a book to ‘play’. The children are given a short excerpt from the book to read and will then be able to choose from a selection of writing prompts. These prompts encourage students to bring a character from the story off on their own side quest; to use their imagination to create their own unique plots and adventures, even drawing illustrations as they go. Upon completion, these writings and illustrations will be uploaded to the Story Squad application where they will face-off against other players. Winners will be chosen by popular vote weekly and students will collect badges and achievements as they go, similar to traditional games. Driven by friendly competition and a sense of accomplishment, students will be eagerly picking up Story Squad. By working to rise up the leaderboards, the students will be improving their creative writing skills while having fun. 
 
-[insert Story Squad image]
+<img src="/img/story_squad_gameplay.png">
 *Children will be able to pick a mission, and then will read, write and draw, submitting their work to compete against others.*
 
 Features/Technical Challenges:
@@ -32,10 +34,13 @@ To prepare the Story Squad application for its first release, our data science t
 
 While in theory, this seemed straightforward; anyone who has tried to read a young child’s handwriting knows how difficult it can be for a human to understand their writing, let alone a computer. Ideally, we would have been able to build and train our own Optical Character Recognition (OCR) model so we could customize it to our specific needs. For us, that would have meant training an OCR model on specifically children’s handwriting. Unfortunately, we did not have access to the amount of children’s handwriting data that would have allowed us to create a robust model. Instead, we turned to the second-best option. Google Cloud Vision provides an industry-leading OCR that is specifically trained on handwriting, known as a Handwritten Text Recognition (HTR) model. While this is trained on adult handwriting as opposed to children’s handwriting, it still performed better than any other model we tested.
 
-After transcribing the student’s handwriting, all we had left to do for release 1 was to assign the complexity score. Again this task, on the surface, seemed simple enough. The Python package textstat was built specifically to “calculate statistics from text to determine readability, complexity and grade level of a particular corpus.” This package includes a dozen different formulas that we could leverage to provide complexity metrics for our student’s writings. However, as we looked into implementing textstat, we discovered some shortcomings both with the textstat package itself, and the text we would input into the functions. First, textstat is built and designed around professionally written and edited documents. It would not be fair to attempt to evaluate the writing of an eight-year-old against such standards. Second, the quality of the input text was not on par with what textstat was trained on. While the Google Cloud Vision HTR had done its best with the children’s handwritten submissions, it was still too rough to try to evaluate sentence structure or syllables or more complicated natural language processing methods. We also discovered that the quality of the transcription was entirely reflective of the handwriting of the child. Sloppy handwriting led to missed punctuation, added words, and a perceived increase in spelling mistakes.
+After transcribing the student’s handwriting, all we had left to do for release 1 was to assign the complexity score. Again this task, on the surface, seemed simple enough. The Python package [textstat](https://pypi.org/project/textstat/) was built specifically to “calculate statistics from text to determine readability, complexity and grade level of a particular corpus.” This package includes a dozen different formulas that we could leverage to provide complexity metrics for our student’s writings. However, as we looked into implementing textstat, we discovered some shortcomings both with the textstat package itself, and the text we would input into the functions. First, textstat is built and designed around professionally written and edited documents. It would not be fair to attempt to evaluate the writing of an eight-year-old against such standards. Second, the quality of the input text was not on par with what textstat was trained on. While the Google Cloud Vision HTR had done its best with the children’s handwritten submissions, it was still too rough to try to evaluate sentence structure or syllables or more complicated natural language processing methods. We also discovered that the quality of the transcription was entirely reflective of the handwriting of the child. Sloppy handwriting led to missed punctuation, added words, and a perceived increase in spelling mistakes.
 
-[insert handwriting/transcription images]
+<img src="/img/bad_handwriting.png">
 *Poor handwriting led to poor transcriptions which affected the complexity metrics the textstat library used.*
+
+<img src="/img/good_handwriting.png">
+*Better handwriting led to far less transcription errors.*
 
 Upon reflecting on this dilemma, we decided to create our own complexity metric formula based on features we knew we could reliably extract from the text regardless of the quality of the transcription. After all, our goal was to evaluate the content of the children’s writing itself, not the quality of the student’s handwriting. That was the genesis of the Squad Score formula! 
 
@@ -43,7 +48,27 @@ After conversations between our data science team members, numerous rounds of da
 
 Our current working formula simply adds weights to each of these metrics and adds them together to produce our Squad Score. While there is a lot of room for improvement this has given us a good baseline to work off of.
 
-[insert code image]
+```python
+# Instantiate weights
+weights = {"grade_level": .5,
+            "story_length": 1,
+            "avg_word_len": 1,
+            "quotes_number": 1,
+            "percent_complex_words": 0}
+
+# Scale needed metrics
+scaled = scale_row(row, transcription_source)[0]
+
+# Weight values
+gl = weights["grade_level"] * int(row[2])
+sl = weights["story_length"] * scaled[0]
+awl = weights["avg_word_len"] * scaled[1]
+qn = weights["quotes_number"] * scaled[2]
+pcw = weights["quotes_number"] * scaled[3]
+
+# Add all values
+s_score = gl + sl + awl + qn + pcw
+```
 *Baseline Complexity Metric Model*
 
 Current State
@@ -56,6 +81,8 @@ As we continue to work on the challenges presented by release 1, we eagerly look
 
 Stay tuned to my blog for Part 2 of the development of Story Squad!
 
+**Get your child to Story Sqaud Up! [here](https://b.storysquad.dev/login)**
+
 Sources:
-Children, teens, and reading: A common sense media research brief 
-https://pypi.org/project/textstat/
+[^1]: Media, C. S. (2014, May 12). Children, Teens, and Reading. Retrieved from https://www.commonsensemedia.org/research/children-teens-and-reading
+
