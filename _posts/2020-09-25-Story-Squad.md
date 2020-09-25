@@ -1,21 +1,19 @@
 ---
 layout: post
-title: Implementing K Nearest Neighbors Algorithm with Basic Python
+title: Story Squad: Redefining Screen Time to be Educational Fun
 ---
 
 <img src="/img/story_squard_header.png">
-
-## Story Squad: Redefining Screen Time to be Educational Fun
 ### The application that engages elementary school students by gamifying creative reading and writing
 
 *By Steven Chase*
 
-Background:
+**Background:**
 
 Across the nation, the frequency with which students are reading and writing is decreasing. The drop is especially sharp for elementary and high school students. A study done by Common Sense Media discovered that the number of elementary school students who “never” or “hardly ever” read has roughly tripled in the last 30 years, from 8% to 22%. Additionally, the proportion of daily readers drops from 48% at the age of 8 down to 24% at the age of 15. A full third (33%) of 13-year-olds admit to reading no more than once or twice a year! 
 
 <img src="/img/daily_reader_pie_charts.png">
-*The amount of daily readers drops from 53% to 19% from ages 9 to 17 while those who ‘never/hardly ever’ read increases from 11% to 27%.* [^1]
+*The amount of daily readers drops from 53% to 19% from ages 9 to 17 while those who ‘never/hardly ever’ read increases from 11% to 27%.* (1)
 
 
 
@@ -24,9 +22,10 @@ These are troubling statistics we are seeing coming from young students. Especia
 Enter Story Squad. Story Squad is the brainchild of Graig Peterson. Graig has been an educator for over a decade and understands how important creative reading and writing is to the development of a young student. He has seen the downward trend of students reading and writing less across his career and wants to re-engage elementary-aged students. His vision is to bring the same game structure that the kids enjoy so much, the reason they spend hours on Fortnite, to reading and writing. His Story Squad application will gamify creative writing. Students will be able to select a book to ‘play’. The children are given a short excerpt from the book to read and will then be able to choose from a selection of writing prompts. These prompts encourage students to bring a character from the story off on their own side quest; to use their imagination to create their own unique plots and adventures, even drawing illustrations as they go. Upon completion, these writings and illustrations will be uploaded to the Story Squad application where they will face-off against other players. Winners will be chosen by popular vote weekly and students will collect badges and achievements as they go, similar to traditional games. Driven by friendly competition and a sense of accomplishment, students will be eagerly picking up Story Squad. By working to rise up the leaderboards, the students will be improving their creative writing skills while having fun. 
 
 <img src="/img/story_squad_gameplay.png">
+
 *Children will be able to pick a mission, and then will read, write and draw, submitting their work to compete against others.*
 
-Features/Technical Challenges:
+**Features/Technical Challenges:**
 
 I am a data scientist working as part of a nine-person cross-functional team whose goal is to turn Graig’s vision into reality. While our five web developers worked on creating a kickass front end graphical user interface for the student and parent to interact with, our three-member data science team got to work on creating the behind the scene magic that makes the application run. 
 
@@ -40,7 +39,7 @@ After transcribing the student’s handwriting, all we had left to do for releas
 *Poor handwriting led to poor transcriptions which affected the complexity metrics the textstat library used.*
 
 <img src="/img/good_handwriting.png">
-*Better handwriting led to far less transcription errors.*
+*Better handwriting led to far less transcription errors and better complexity metrics.*
 
 Upon reflecting on this dilemma, we decided to create our own complexity metric formula based on features we knew we could reliably extract from the text regardless of the quality of the transcription. After all, our goal was to evaluate the content of the children’s writing itself, not the quality of the student’s handwriting. That was the genesis of the Squad Score formula! 
 
@@ -48,6 +47,7 @@ After conversations between our data science team members, numerous rounds of da
 
 Our current working formula simply adds weights to each of these metrics and adds them together to produce our Squad Score. While there is a lot of room for improvement this has given us a good baseline to work off of.
 
+*Baseline Complexity Metric Model*
 ```python
 # Instantiate weights
 weights = {"grade_level": .5,
@@ -69,20 +69,18 @@ pcw = weights["quotes_number"] * scaled[3]
 # Add all values
 s_score = gl + sl + awl + qn + pcw
 ```
-*Baseline Complexity Metric Model*
 
-Current State
+**Current State:**
 
 As we prepare for release 1 in the upcoming weeks, we will spend our time iterating over our model to make the most accurate complexity evaluation we can produce out of our chosen metrics. We recently received a ranking of 25 of the children’s stories in our dataset performed by our stakeholder Graig’s mother. While 25 is not very many labels to train a supervised model on, it is better than the zero labels we had before. Due to this limited availability of labels, we have begun to explore the concept of ‘weak supervision learning’ by leveraging a package out of Stanford called Snorkel. Weak supervision will take advantage of the limited amount of known labels with an understanding that while imperfect, they can be leveraged to create strong predictive models. Snorkel works to magnify the limited amount of labeled data by having the developer create labeling functions to programmatically add labels to unlabeled data. The resulting output is the probabilities of each label, rather than ground truths. 
 
-Future
+**Future:**
 
 As we continue to work on the challenges presented by release 1, we eagerly look forward to release 2; gamification! Release 2 will provide the framework for the gameplay. Students will be grouped together for competition based on the complexity score of their submission. Winners will be tracked and rewarded. Fun will be had all around and most importantly, learning and creative growth will once again be instilled in the children’s lives! 
 
-Stay tuned to my blog for Part 2 of the development of Story Squad!
+### Stay tuned to my blog for Part 2 of the development of Story Squad!
 
 **Get your child to Story Sqaud Up! [here](https://b.storysquad.dev/login)**
 
-Sources:
-[^1]: Media, C. S. (2014, May 12). Children, Teens, and Reading. Retrieved from https://www.commonsensemedia.org/research/children-teens-and-reading
+##### Sources: (1): Media, C. S. (2014, May 12). Children, Teens, and Reading. Retrieved from https://www.commonsensemedia.org/research/children-teens-and-reading
 
