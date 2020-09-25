@@ -3,10 +3,9 @@ layout: post
 title: Implementing K Nearest Neighbors Algorithm with Basic Python
 ---
 
-<img src="/img/mr_rogers.png">
-
-## Implementing K Nearest Neighbors Algorithm
 #### *De-mystifying the black box by building a working algorithm with basic Python*
+
+<img src="/img/mr_rogers.png">
   
 *By Steven Chase*
 
