@@ -78,6 +78,13 @@ The objective of our second release is to introduce the gameplay framework that 
 
 The largest challenge that we had with grouping users was considering what to do with what we called ‘the remainder problem’. Very rarely would the number of users be evenly divisible by four. Naturally the final grouping could have only one, two or three members assigned to it. As the gameplay required that each group had exactly four players, we had to come up with a solution to this problem. Our solution was to create ‘bot’ players. We would fill out the group by pulling in a similar writing piece that had been submitted by a user from a different group. Then a ‘bot’ would be implemented to auto-vote and complete the rest of the gameplay for that submission. Additionally, we wanted to limit the number of ‘bot’ players to one per group. In other words, if there was a single player left to be grouped, we did not want to build a group with one user and three bots. Instead we spread out the bots, creating three groups of three student users with one lone bot player. 
 
+**Side note: Moderation**
+
+Something that was not specifically required from the stakeholders, but an issue that we were concerned about as a data science team, was moderation. Users of the Story Squad application would be uploading drawings and written stories which would then be shown to other students in their cohort. As the target demographic for the application is 8-12-year-old children, we wanted to make sure that they were not being exposed to any inappropriate material. We sought to create an automated moderation system that would screen both the user’s drawings as well as the language used in their written stories. If inappropriate content was detected, we would raise a flag to an administrator who would confirm the inappropriate material.
+
+To moderate the images, as we were already connecting to Google Cloud Vision API, we leveraged their SafeSearch method to flag any material that returned a 3 (possible) or higher in containing ‘adult’, ‘racy’ or ‘violent’ material. To moderate the written stories, after transcribing the text we compared each word to a dictionary of bad words and phrases. If there are any matches, a flag will be raised to the administrator’s board.
+
+In order to be in compliance with the Children’s Online Privacy Protection Rule (COPPA), our stakeholder currently has administrators to review every submission. The automated process that we created will help these administrators prioritize their work and prove invaluable as the application scales. 
 
 **Looking to the Future:**
 
