@@ -305,9 +305,10 @@ class KNN():
   def fit(self, X_train, y_train):
     '''
     Our algorithm needs the input data to be a python list
-    Fit method will convert X_train and y_train to lists and save in memory
+    Fit method will convert y_train to a list and save both y_train and X_train to memory
+    X_train will already be converted to a list during the scaling process
     '''
-    self.X_train = X_train.values.tolist()
+    self.X_train = X_train
     self.y_train = y_train.values.tolist()
 
   def get_KNN(self, test_row):
@@ -374,9 +375,8 @@ class KNN():
     Method utilizes the helper_predict_classification to return predictions for 
     multiple test rows stored in X_test.
     '''
-    # X_test must be a python list
-    # Method will convert the input to python lists and save it in memory
-    self.X_test = X_test.values.tolist()
+    # Save X_test to memory
+    self.X_test = X_test
 
     # Create a list to hold all of the predictions
     self.predictions = []
@@ -420,9 +420,8 @@ class KNN():
     Method utilizes the helper_predict_classification to return predictions for 
     multiple test rows stored in X_test.
     '''
-    # X_test must be a python list
-    # Method will convert the input to python lists and save it in memory
-    self.X_test = X_test.values.tolist()
+    # Save X_test to memory
+    self.X_test = X_test
 
     # Create a list to hold all of the predictions
     self.predictions = []
@@ -546,7 +545,27 @@ from sklearn.model_selection import train_test_split
 # Split the df into 80% train 20% test data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size= 0.20, random_state=42)
 ```
-Our data has been cleaned and the target and features have been separated and split into training and testing datasets. If you've stuck with us this far, it's about to pay off. Let's run some KNN models!
+Our data has been cleaned and the target and features have been separated and split into training and testing datasets. We have one last pre-processing step to take before being able to run our data: scaling. As we mentioned before, KNN makes predictions based on distances between data points. As such, it is crucial that all of the data it is comparing is on the same scale. In our Titanic dataset, most of the data has a maximum value of 3 or under. However, the 'Age' column has a maximum value of 80. This difference in magnitude will lead to less optimized results from KNN. To solve this we will use one of scikit-learn's scaling packages, Normalizer.
+
+Normalizing in scikit-learn rescales each observation to have a length of 1. We are using this particular method because it is useful for sparse datasets, meaning lots of zeros, which our dataset has. When scaling your data, you want to fit and transform on your training data, and only transform your testing data. Fitting the scaler to your test data will result in data leakage.
+
+```python
+# Normalize Data
+
+# Import Normalizer
+from sklearn.preprocessing import Normalizer
+
+# Instantiate scaler model
+scaler = Normalizer()
+
+# Fit and Transform X_train
+X_train = scaler.fit_transform(X_train)
+
+# Transform X_test
+X_test = scaler.transform(X_test)
+```
+
+If you've stuck with us this far, it's about to pay off. Let's run some KNN models!
 
 #### Baseline Accuracy
 
@@ -607,11 +626,11 @@ scikit_KNN.score(X_test, y_test)
 ```
 Our prediction array is:
 ```
-[0 1 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 1 1 0 1 1 1 0 1
- 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0 1 0 1 0 0 1 1 0 0 1 1 1 1 0 0 0 0 0 0 1 0 0
- 0 1 1 1 1 0 0 0 0 0 1 1 1 0 0 0 1 1 0 1 0 1 0 0 1 1 1 0 1 1 0 0 0 0 0 0 1
- 0 0 0 0 0 1 1 0 0 0 1 0 0 1 0 0 1 1 1 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 1 0 0
- 0 0 0 1 0 0 1 1 0 1 0 0 0 0 0 1 0 1 0 1 0 0 1 1 1 0 1 1 1 0]
+[0 0 0 0 0 1 0 0 0 0 1 1 1 0 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 1 1 0 1 0 1 0 0
+ 1 1 1 1 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 1 0 1 0 0 0 1 0 0 0 1 0 0
+ 0 1 1 0 1 0 0 0 0 0 1 1 0 0 0 0 1 1 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0 0 1
+ 1 0 0 0 0 0 1 0 0 1 0 1 0 1 0 0 1 1 1 0 1 0 0 0 0 0 0 0 1 1 0 0 0 0 1 0 0
+ 0 0 0 1 0 0 1 1 0 1 0 0 0 1 0 0 0 1 0 1 0 0 1 1 0 0 1 1 1 0]
 ```
 With an accuracy of:
 ```
@@ -646,13 +665,13 @@ our_KNN.model_accuracy(y_test)
 ```
 The prediction array for our algorithm is:
 ```
-[0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0]
+[0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0]
 ```
 With an accuracy of:
 ```
-0.7471910112359551
+0.7696629213483146
 ```
-Our algorithm resulted in an accuracy of 74.7%, just shy of the results of Scikit-Learn's method but still far better than our baseline. 
+Our algorithm resulted in an accuracy of 76.96%! Slightly better accuracy than Scikit-Learn's method and far better than our baseline.
 
 ### What's Next?
 
