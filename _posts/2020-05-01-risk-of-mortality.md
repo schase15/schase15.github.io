@@ -42,12 +42,60 @@ As this is a classification model, I chose two metrics to evaluate its performan
 
 ### Comparing Models:
 
+Having defined my target and evaluation metrics, I then set out to explore different types of models to determine which would return the highest evaluation metrics. As this is a classification problem, I chose to explore Random Forest, XGBoost and Support Vector Machine. Additionally, I explored two linear classification models: Logistic Regression and Linear Support Vector Machine. 
 
+I started by running a baseline model to determine the null accuracy and f1 score. That is, the evaluation scores if we were to guess that every patient had a classification of minor risk of mortality (the most frequent target class).
 
+Baseline:
+-	Accuracy: 0.57
+-	Weighted Average f1 score: 0.41
 
+Below are the best results obtained by each model type I experimented with:
+
+<img src="/img/model_scores.PNG">
+
+### Insights:
+
+Besides the predictive capabilities of the model, we can also draw further insights by looking at how the features interact with the model and with each other. As we mentioned already, the permutation feature importance captures the weight of the effect that each feature has on the model’s prediction. However, it doesn’t tell us anything beyond that like how it effects it. 
+
+**Partial Dependence Plots**
+
+For more insight, we can use partial dependence plots (PDP). A single feature PDP shows how one feature effects the probability of being categorized for each risk class. A two feature PDP shows how two specific features interact with the model and its predictions. The single feature PDP below shows the interaction between ‘Age Group’ and the target class.
+
+<img src="/img/pdp_1_variable.png">
+
+This clearly shows us that as age increases, the probability of being classified as having only a minor risk of mortality decreases while it increases in all of the higher risk categories. 
+
+**Shapley Values**
+
+Another very useful visualization that shows us how a specific prediction was made for an individual observation is the Shapley values. It will tell us both which direction and how strongly each feature pushed the probability for classification for each target label.
+
+Given a random test patient:
+
+<img src="/img/test_patient.png">
+
+Let’s examine the resulting the Shapley Values plot below:
+
+Shapley values for Minor Risk of Mortality:
+<img src="/img/shapley_minor.png">
+
+Shapley values for Moderate Risk of Mortality:
+<img src="/img/shapley_moderate.png">
+
+Shapley values for Major Risk of Mortality:
+<img src="/img/shapley_major.png">
+
+Shapley values for Extreme Risk of Mortality:
+<img src="/img/shapley_extreme.png">
+
+The red arrows are the features that push the probability for that class higher, and the blue arrows push the probability lower. The length of the colored bar is the amount of impact the feature had on influencing the prediction.
+
+For this individual, the class with the highest probability (0.72) was the 'minor risk of mortality'. Therefore, the model predicted that this specific patient would have a 'minor risk of mortality'. This prediction matched the actual records, so the model predicted correctly. You can tell, the factors that increased the probability that this patient had a ‘minor risk of mortality’ were that the individual was young, paid with Medicaid, was a medical admittance (opposed to surgical) and did not undergo a procedure (CCS Procedure 0). Some features that lowered the probability of it being a 'minor risk', (meaning increased their risk) were; that it was an emergency department admittance and that it was a digestive system diagnosis (APR DRG 254).
+
+### In Closing:
+
+While the purpose of creating the model is for its predictive powers, analyzing the results should never be taken lightly. There is so much to be learned from examining which features the model relies on and how they interact. For example, my prior assumption was that gender or race (whether because of being susceptible to different diseases, or due to any biases in the medical system) would have a larger impact than they did. It was surprising to uncover that the method of payment had an impact on the risk of mortality. Why is that? Do people on Medicaid not receive the same level of treatment? Can they not afford to stay in the hospital as long and therefore suffer the consequences? Does the fact that they are on Medicaid speak to something personal that inherently increases their risk of mortality? That is an interesting avenue to explore with potentially profound ramifications that could have real impacts on the healthcare system. Without utilizing tools such as partial dependence plots and Shapley values, you won’t be able to examine what your model is doing under the hood which proves invaluable to your understanding of the problem you set out to solve in the first place.
 
 Visit the [application](https://risk-of-mortality.herokuapp.com/) to get predictions of your patients' risk of mortality.
-
-*For more detailed information about the process, evaluation and insights of the model, please explore the cooresponding pages on the Dash web app.*
 
 ##### For access to the raw code (which includes a link to the raw data) please visit my [GitHub](https://github.com/schase15/risk_of_mortality)
