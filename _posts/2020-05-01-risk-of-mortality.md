@@ -56,6 +56,8 @@ Below are the best results obtained by each model type I experimented with:
 
 <img src="/img/model_scores.PNG">
 
+The Random Forest model gave the best results with an accuracy of 0.69 and a weighted f1 score of 0.68. While there is room for improvement, as future iterations can include feature engineering as well as techniques to deal with imbalanced target classes, the Random Forest model provided significantly better scores than the baseline model did.
+
 ### Insights:
 
 Besides the predictive capabilities of the model, we can also draw further insights by looking at how the features interact with the model and with each other. As we mentioned already, the permutation feature importance captures the weight of the effect that each feature has on the model’s prediction. However, it doesn’t tell us anything beyond that.
