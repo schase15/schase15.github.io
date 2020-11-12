@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Med Cabinet: Find Your Strain of Cannabis!
+title: Med Cabinet; Find Your Strain of Cannabis!
 ---
 
 ## A Web Application to Pair Users with the Best Cannabis Strain for Their Needs
